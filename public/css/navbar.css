@@ -41,11 +41,11 @@ body {
 .container {
     max-width: 1200px; /* Set a max-width to avoid content stretching too much */
     margin: 0 auto; /* Center the content */
-    text-align: center; /* Center the text inside the container */
     padding-top: 80px; /* Add padding to the top to avoid overlap with the navbar */
+    height: auto;
 }
 
-h1 {
+.mlg-name {
     font-size: 2.5rem; /* Adjust the font size as needed */
     color: #2c3e50; /* Text color */
     text-align: center; /* Center align the text */
@@ -205,9 +205,9 @@ h1 {
     border-radius: 10px;
     width: 80%;
     max-width: 900px;
-    position: relative; 
+    position: relative;
     animation: fadeIn 0.5s ease-out;
-    
+
     max-height: 80vh; /* Maximum height of the modal content (80% of the viewport height) */
     overflow-y: auto; /* Makes the modal content scrollable */
 }
@@ -274,4 +274,10 @@ h1 {
     .profile-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+
+
+.auth {
+    gap: 10px;
 }

@@ -1,8 +1,64 @@
-@extends('layouts.header')
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+</head>
+<body>
+    
+<header>
+    <nav class="nav-container">
+
+        <div class="mlg-logo">
+        <img src="mlg.png" alt="">
+        <a href="">MLG College of Learning</a>
+        </div>
+
+
+        <div class="nav-menu">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="">Students</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="">Employee</a>
+                </li>
+
+
+                <hr class="nav-divider">
+
+                <li class="nav-item-dropdown">
+                    <a href="" class="nav-link" onclick="toggleDropdown(event)">
+                        <h5>Welcome,</h5> User
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="" class="dropdown-item" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                        Log out</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+</header>
+
 
 <div class="container">
-    <h1 class="mlg-name">Welcome to MLG College of Learning</h1>
+    <h1>Welcome to MLG College of Learning</h1>
 
     <!-- Widget Container -->
     <div class="widget-container">
@@ -18,10 +74,10 @@
             <p id="employee-id-count">120</p> <!-- Static number for now -->
         </div>
     </div>
-    </div>
+</div>
 
-    <!-- Modal for Student Profiles -->
-    <div id="student-modal" class="modal">
+<!-- Modal for Student Profiles -->
+<div id="student-modal" class="modal">
     <div class="modal-content">
         <!-- Font Awesome X Icon to close the modal -->
         <span class="close" onclick="closeModal('student')">
@@ -31,38 +87,39 @@
         <div class="profile-grid">
             <!-- Example Student Profiles -->
             <div class="profile-card">
-                <img src="{{ asset('img/kobe.jpg')}}" alt="Student 1">
+                <img src="kobe.jpg" alt="Student 1">
                 <p>Bryan Dacera</p>
             </div>
             <div class="profile-card">
-                <img src="{{ asset('img/kobe.jpg')}}" alt="Student 1">
+                <img src="kobe.jpg" alt="Student 1">
                 <p>Bryan Dacera</p>
             </div>
             <div class="profile-card">
-                <img src="{{ asset('img/kobe.jpg')}}" alt="Student 2">
+                <img src="kobe.jpg" alt="Student 2">
                 <p>Bryan Dacera</p>
             </div>
             <div class="profile-card">
-                <img src="{{ asset('img/kobe.jpg')}}" alt="Student 3">
+                <img src="kobe.jpg" alt="Student 3">
                 <p>Bryan Dacera</p>
             </div>
             <div class="profile-card">
-                <img src="{{ asset('img/kobe.jpg')}}" alt="Student 4">
+                <img src="kobe.jpg" alt="Student 4">
                 <p>Bryan Dacera</p>
             </div>
         </div>
     </div>
-    </div>
+</div>
 
-
-    <div id="employee-modal" class="modal">
+<!-- Modal for Employee Profiles -->
+<div id="employee-modal" class="modal">
     <div class="modal-content">
-
+        <!-- Font Awesome X Icon to close the modal -->
         <span class="close" onclick="closeModal('employee')">
             <i class="fas fa-times"></i>
         </span>
         <h2>Employee IDs</h2>
         <div class="profile-grid">
+            <!-- Example Employee Profiles -->
             <div class="profile-card">
                 <img src="kobe.jpg" alt="Student 4">
                 <p>Bryan Dacera</p>
@@ -101,10 +158,10 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 
-    <script src="{{ asset('js/navbar.js') }}"></script>
+<script src="js/script.js"></script>
 
 
-
-@endsection
+</body>
+</html>

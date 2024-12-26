@@ -1,0 +1,190 @@
+#users-table_filter,
+#diaries-table_filter,
+#approval-requests-table_filter{
+    text-align: right;
+}
+#users-table_paginate,
+#diaries-table_paginate,
+#approval-requests-table_paginate{
+    display: flex;
+    justify-content: end;
+}
+
+
+.card {
+    display: flex;
+justify-content: center;
+}
+
+
+.id-card-canvas{
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+    height: 136.8mm;
+    width: 86.368mm;
+    background-size: cover!important;
+    position: relative;
+    font-family: 'Montserrat';
+    color:#fff;
+}
+
+#logo-container{
+    width: 35%;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#logo-container .school-name{
+    font-size: .7em;
+    text-align: center;
+    margin: 0;
+    color: #000000;
+    font-weight: 700;
+    line-height: 1;
+}
+
+#logo-container .school-address{
+    font-size: .5em;
+    color: #000;
+    text-align: center;
+}
+
+.logo-container p{
+   font-size: 0.8em;
+   text-align: center;
+   color: #000;
+}
+
+#school-logo{
+    left: 25px;
+    height: 90px;
+    width: 90px;
+}
+
+#course-color{
+    height: 250px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    clip-path: polygon(100% 15%, 100% 20%, 140% 100%, -150% 100%);
+    z-index: 1;
+}
+
+#student-name{
+    position: absolute;
+    right: 15px;
+    top: 35%;
+    text-align: right;
+    width: 90%;
+}
+
+#student-name .last-name,
+#student-name .first-name{
+    margin: 0;
+    line-height: .8;
+    font-weight: 700;
+}
+
+
+#white-bar{
+    background: #fff;
+    height: 35px;
+    position:absolute;
+    width: 100%;
+    bottom: 10%;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    color: #000;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    font-size: 1.3em;
+}
+
+.extra-details{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    text-align: left;
+    margin-top: 15px;
+}
+
+.extra-details .dob{
+    display: flex;
+    flex-direction: column;
+}
+.extra-details .dob p{
+    font-size: .7em;
+}
+
+.extra-details .dob h4{
+    font-size: .9em;
+    margin: 0;
+}
+
+.extra-details .address{
+    display: flex;
+    align-items: flex-end;
+}
+
+.extra-details .address p{
+    margin: 0;
+    font-size: .9em;
+}
+
+#id-card-footer{
+    position:absolute;
+    bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    font-size: .7em;
+    width: 100%;
+    padding: 0 20px;
+}
+
+#qr-code img{
+    margin-left: 30px;
+}
+
+.validity-table{
+    font-size: .6em;
+    transform: rotate(-90deg);
+    position: absolute;
+    top: 90%;
+    width: 115mm;
+    transform-origin: 0 0;
+}
+
+.back-side-blurb{
+    font-size: .7em;
+}
+
+.back-side-footer{
+    background: #ff914d;
+    font-size: .7em;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+#director-name{
+    font-size: 1.2em;
+}
+
+#students-table_length,
+#students-table_filter{
+    display: inline-block;
+    width: 50%;
+}
+
+#students-table_filter{
+    text-align: right;
+}
+
+#students-table_filter label input{
+    margin-left: 15px;
+}
