@@ -1,0 +1,277 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap");
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    font-family: "Syne", sans-serif; /* Apply Syne font */
+    background-color: #eaf5fd;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Fixed Navbar */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #f0f7fd;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Fix the navbar */
+    top: 0; /* Stick it to the top */
+    left: 0; /* Align it to the left */
+    right: 0; /* Ensure it stretches across the width */
+    z-index: 1000; /* Ensure it stays on top of other content */
+    width: 100%; /* Ensure it stretches across the page */
+    margin: 0; /* Remove any default margin */
+    box-sizing: border-box; /* Include padding/border in the width */
+}
+
+body {
+    margin: 0; /* Remove default body margin */
+    padding-top: 80px; /* Adjust the body content to avoid overlap with navbar */
+    box-sizing: border-box; /* Include padding in element's width/height */
+}
+
+/* Content to prevent shifting */
+.container {
+    max-width: 1200px; /* Set a max-width to avoid content stretching too much */
+    margin: 0 auto; /* Center the content */
+    text-align: center; /* Center the text inside the container */
+    padding-top: 80px; /* Add padding to the top to avoid overlap with the navbar */
+}
+
+h1 {
+    font-size: 2.5rem; /* Adjust the font size as needed */
+    color: #2c3e50; /* Text color */
+    text-align: center; /* Center align the text */
+}
+
+.mlg-logo {
+    display: flex;
+    align-items: center;
+}
+.mlg-logo img {
+    height: 50px;
+    margin-right: 10px;
+}
+.mlg-logo a {
+    color: #2c3e50;
+    font-size: 1rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+.mlg-logo a:hover {
+    color: #1e70bf;
+}
+.nav-menu {
+    margin-left: auto;
+}
+.nav-list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+.nav-item {
+    margin: 0 15px;
+}
+.nav-item a {
+    color: #2c3e50;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+.nav-item a:hover {
+    color: #1e70bf;
+}
+.nav-divider {
+    height: 20px;
+    width: 1px;
+    background-color: #000000;
+    margin: 0 15px;
+}
+.nav-item-dropdown {
+    position: relative;
+}
+.nav-link {
+    color: #2c3e50;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none; /* Remove underline */
+}
+.nav-link:hover {
+    color: #1e70bf;
+}
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+.dropdown-item {
+    padding: 10px 20px;
+    color: #2c3e50;
+    text-decoration: none;
+    display: block;
+    white-space: nowrap;
+}
+.dropdown-item:hover {
+    background-color: #1e70bf;
+    color: white;
+}
+.nav-item-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+
+
+/*Widgets*/
+
+
+/* Widget Container */
+.widget-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Style for Each Widget Box */
+.widget-box {
+    background-color: #f0f7fd;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.widget-box h3 {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.widget-box p {
+    font-size: 2rem;
+    color: #2c3e50;
+    font-weight: bold;
+    margin: 0;
+}
+
+.widget-box:hover {
+    background-color: #88d2f4;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px); /* Creates a subtle lift effect */
+}
+
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Overlay background */
+    overflow: auto;
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 900px;
+    position: relative; 
+    animation: fadeIn 0.5s ease-out;
+    
+    max-height: 80vh; /* Maximum height of the modal content (80% of the viewport height) */
+    overflow-y: auto; /* Makes the modal content scrollable */
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-50px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Close Button (X) */
+.close {
+    color: #000000;
+    font-size: 40px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;  /* Adjusted for better placement inside the modal */
+    right: 20px;  /* Ensure it's aligned to the right inside the modal */
+    cursor: pointer;
+}
+
+.close i {
+    font-size: 20px; /* Adjust icon size */
+}
+
+
+
+
+.close:hover,
+.close:focus {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+    transform: scale(1);
+
+}
+
+/* Profile Grid Layout */
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.profile-card {
+    text-align: center;
+}
+
+.profile-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile-card p {
+    font-size: 1rem;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+/* Media Query for smaller screens */
+@media screen and (max-width: 768px) {
+    .profile-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
