@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{{ asset('css/id.css') }}">
 
 <style>
+ 
     .container {
         padding: 1.5rem;
         display: flex;
@@ -230,6 +231,10 @@
         width: 100px;
         text-align: center;
     }
+    button[type="submit"] .view-btn{
+       padding:10px;
+   }
+ 
 </style>
 
 <div class="container">
@@ -262,6 +267,10 @@
             <td>{{ $student->course }}</td>
             <td>{{ $student->studentid }}</td>
             <td class="action-btn">
+
+                <form action="{{ route('students.show', $student->id) }}" method="GET" class="view-form">
+                  <button type="submit" class="view-btn">👁️ </button>
+                </form>
                 <!-- Edit Button -->
                 <form action="{{ route('students.edit', $student->id) }}" method="GET" class="edit-form">
                     <button type="submit" class="edit-btn">✏️</button>
@@ -283,7 +292,6 @@
     </tbody>
 </table>
 
-<!-- Pagination Controls (only visible if there is data) -->
 @if($students->isNotEmpty())
 <div class="pagination" id="paginationControls">
     <button class="disabled">Prev</button>
@@ -296,7 +304,6 @@
 </div>
 @endif
 
-<!-- Modal Structure -->
 <div id="createModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" id="closeModalBtn">&times;</span>
@@ -338,6 +345,9 @@
             <label for="ename">Emergency contact person:</label>
             <input type="text" id="ename" name="ename" value="{{ old('ename') }}">
 
+            <label for="datebirth">Date of Birth:</label>
+            <input type="date" id="datebirth" name="datebirth" value="{{ old('datebirth') }}">
+
             <label for="signature">Signature:</label>
             <input type="file" id="signature" name="signature">
 
@@ -375,16 +385,12 @@
 
     courseSelect.addEventListener('change', (e) => {
         const course = e.target.value;
-
-        // Hide the placeholder option once a course is selected
         if (course) {
             const firstOption = courseSelect.querySelector('option[value=""]');
             if (firstOption) {
                 firstOption.style.display = 'none';
             }
         }
-
-        // Update the color display based on selected course
         if (course === 'BSIT') {
             courseColorDiv.style.backgroundColor = 'orange';
             courseColorDiv.textContent = 'BSIT';

@@ -15,6 +15,7 @@ class Student extends Model
         'studentid',
         'contact',
         'econtact',
+        'datebirth',
         'ename',
         'signature',
         'qr',

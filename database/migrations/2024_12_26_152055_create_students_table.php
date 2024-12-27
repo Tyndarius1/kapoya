@@ -21,6 +21,7 @@ return new class extends Migration
         $table->string('studentid')->unique();
         $table->string('contact');
         $table->string('econtact');
+        $table->string('datebirth');
         $table->string('ename');
         $table->string('signature')->nullable();
         $table->string('qr')->nullable();

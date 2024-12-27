@@ -13,7 +13,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
-        return view('student', compact('students'));
+        return view('student.index', compact('students'));
     }
 
     /**
@@ -38,6 +38,7 @@ class StudentController extends Controller
             'studentid' => 'required|string|max:255|unique:students,studentid',
             'contact' => 'required|string|max:20',
             'econtact' => 'required|string|max:20',
+            'datebirth' => 'required|string|max:20',
             'ename' => 'required|string|max:20',
             'signature' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'qr' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -59,6 +60,7 @@ class StudentController extends Controller
             'studentid' => $validated['studentid'],
             'contact' => $validated['contact'],
             'econtact' => $validated['econtact'],
+            'datebirth' => $validated['datebirth'],
             'ename' => $validated['ename'],
             'signature' => $signaturePath,
             'qr' => $qrPath,
@@ -74,7 +76,8 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        //
+         $student = Student::findOrFail($id);
+        return view('student.show', compact('student'));
     }
 
     /**

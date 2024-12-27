@@ -15,10 +15,10 @@ class AdminUserSeeder extends Seeder
     public function run(): void
     {
         User::updateORCreate(
-            ['email' => 'kb.dacera@mlgcl.edu.ph'],
+            ['email' => 'b.dedal@mlgcl.edu.ph'],
             [
-                'name' => 'Bryan Dacera',
-                'password' => Hash::make('king11BRYAN!'),
+                'name' => 'Boyet Dedal',
+                'password' => Hash::make('admin123'),
                 'role' => 'admin',
             ]
         );
