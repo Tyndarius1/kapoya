@@ -4,20 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Employee extends Model
 {
-    protected $fillable = [
         'firstname',
         'middlename',
         'lastname',
         'address',
-        'course',
-        'studentid',
-        'contact',
-        'econtact',
+        'employeeid',
         'datebirth',
-        'ename',
         'signature',
         'proimage',
-    ];
 }

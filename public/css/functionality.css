@@ -1,0 +1,581 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+.pinakamain {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 15px;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    height: 380px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+}
+
+.main-one {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main-two {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 40px 8px;
+    color: whitesmoke;
+}
+
+.numcourse {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    position: absolute;
+    bottom: 10%;
+    height:25px;
+    padding-right: 154px;
+}
+
+.course h4 {
+    position: absolute;
+    right: 3%;
+    top: 1%;
+}
+
+.number h4{
+    margin-top: 10px;
+}
+
+.last {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top:85%;
+    gap: 80%;
+    margin: 6px;
+}
+
+.logo {
+    text-align: center;
+    margin: 10px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; 
+    text-align: center; 
+}
+
+.logo img {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 10px;
+}
+
+.logo p {
+    font-size: 8px;
+}
+
+.qr-code img {
+    width: 94px;
+    height: 94px;
+    position: absolute;
+    top: 28%;
+    left: 4%;
+}
+
+.signature img {
+    width: 140px;
+    height: 140px;
+    position: absolute;
+    top: 35%;
+    left: 2%;
+}
+
+.image img {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    left: 20%;
+    top: 2%;
+}
+
+.image-container {
+    width: 250px;
+    height: 250px;
+    position: relative;
+    left: 20%;
+    top: 2%;
+    overflow: hidden;
+    border: 1px dashed #ccc;
+}
+
+#editable-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.date p {
+    font-size: 8px;
+}
+
+.brgy p {
+    font-size: 10px;
+}
+
+.last p {
+    font-size: 8px;
+}
+
+.mainconsaubos {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 150px;
+    background: #ff6f00;
+    clip-path: polygon(0% 30%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.likod {
+    width: 260px;
+    height: 380px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.table-container {
+    border: 2px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    position: absolute;
+    top: 85%;
+    left: 54%;
+    transform: rotate(-90deg);
+    transform-origin: left;
+}
+
+.table-container th, .table-container td {
+    border: 1px solid black;
+    padding: 1px 5px;
+}
+
+@media (max-width: 480px){
+       
+}
+
+.table-container th {
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: black;
+    color: white;
+    font-size: 10px;
+}
+
+.table-container tr {
+    font-size: 10px;
+}
+
+.semester-title {
+    text-align: left;
+    font-weight: bold;
+}
+
+.likod-one {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.one-table {
+    margin: 5px;
+    width: 40%;
+}
+
+.one-right {
+    margin-right: 10px;
+    margin-top: 16px;
+    width: 98%;
+    height: 318px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.parag p {
+    font-size: 9px;
+    text-align: center;
+}
+
+.parag-name {
+    margin-top: -5px;
+}
+
+.parag-name p {
+    font-size: 9px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.parag2 {
+    font-size: 9px;
+    text-align: center;
+    margin-top: -10px;
+}
+
+.parag3 {
+    font-size: 9px;
+    text-align: center;
+    margin-top: -15px;
+}
+
+.parag4 {
+    font-size: 9px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: -13px;
+}
+
+.parag2 .span {
+    font-weight: bold;
+}
+
+.parag2 .span1 {
+    font-weight: bold;
+}
+
+.parag5 {
+    position: relative; 
+    top: -2px;
+    margin-top: 2px;
+    font-size: 8px;
+    margin-left: 5px;
+    text-align: center;
+    font-weight: bold;
+    background: black;
+    color: white;
+    padding: 2px;
+    z-index: 1; 
+    height:50px;
+    width:160px;
+}
+
+#editable-number {
+    position: absolute;
+    z-index: 10;
+    cursor: move; 
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+}
+
+.parag1span {
+    font-weight: bold;
+}
+/* responsive */
+
+
+.likod-two {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    height: 15px;
+    padding: 4px;
+    font-size: 12px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.likod-two p{
+    margin-top: 15px;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    background-color: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 800px;
+    z-index: 1000;
+    overflow: visible; 
+    flex-wrap: nowrap; 
+}
+
+.toolbar button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    padding: 5px 10px;
+    flex: 0 1 auto; /* Allow buttons to shrink or grow */
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.toolbar button:hover {
+    transform: scale(1.1);
+    color: #007bff;
+}
+
+.toolbar .tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    font-size: 12px;
+}
+
+.toolbar button:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.toolbar input[type="file"] {
+    display: none;
+}
+
+#draggableImage {
+    position: absolute;
+    cursor: grab;
+}
+
+.image img, .signature img { 
+    height: auto; 
+    transition: transform 0.1s ease; /*****************************************************************************************/
+    border: 5px solid transparent; 
+} 
+
+.image img:hover, .signature img:hover { 
+    border: 5px solid transparent; 
+}
+
+.date p, .brgy p, .name h3, .parag4 span { 
+    transition: none; 
+    border: none; 
+}
+
+.date p:hover, .brgy p:hover, .name h3:hover, .parag4 span:hover { 
+    border: none; 
+    box-shadow: none; 
+}
+
+#saveBtn {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+#saveBtn:hover {
+    background-color: #0056b3;
+}
+
+#printContainer {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    padding: 20px;
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    display: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#printContainer pre {
+    font-family: "Courier New", monospace;
+    white-space: pre-wrap;
+}
+
+.text-toolbar {
+    display: flex; 
+    align-items: center; 
+    justify-content: flex-start; 
+    background-color: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    gap: 10px; 
+    position: absolute;
+    top: 13px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%; 
+    height: 60px;
+    max-width: 100%;
+    z-index: 1000;
+    overflow: visible; 
+    flex-wrap: nowrap; 
+    
+}
+
+.text-toolbar select, 
+.text-toolbar button, 
+.text-toolbar input {
+    flex-shrink: 0; /* Prevent items from shrinking */
+    font-size: 16px; /* Ensure consistent font size */
+    height: 35px; /* Adjust height for uniformity */
+    line-height: 1;
+}
+
+.text-toolbar #font-selector {
+    min-width: 120px; /* Ensure enough width for font names */
+    font-size: 16px;
+    margin-top: -40px;
+}
+
+
+.text-toolbar #font-size {
+    width: 50px; /* Adjust width for consistency */
+    text-align: center;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.text-toolbar button {
+    border: none; 
+    background: none; 
+    font-size: 18px; 
+    color: #333; 
+    cursor: pointer; 
+    transition: transform 0.2s ease, color 0.2s ease; 
+    padding: 8px;
+}
+
+.text-color-picker {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+   
+}
+
+.text-color-picker .icon {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000; /* Default color */
+    transition: color 0.3s ease;
+    position: absolute;
+    top: 30%;
+    left: 67%;
+}
+
+.text-color-picker input[type="color"] {
+    width: 30px;
+    height: 30px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    position: absolute;
+    top: 25%;
+    left: 70%;
+}
+
+.text-toolbar button:hover {
+    color: #007bff;
+}
+
+/* For contenteditable elements to remove hover/focus effect */
+[contenteditable="true"]:focus,
+[contenteditable="true"]:hover {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+.editable {
+  transition: font-size 0.3s ease-in-out; 
+}
+
+
+#toolbar {
+    display: none; /* Initially hidden */
+    position: absolute;
+    z-index: 10; /* Ensure it's above other elements */
+}
+
+.resize-handle {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    pointer-events: all;
+}
+
+.resizable {
+    border: 1px dashed #000;
+    position: relative;
+}
+
+.resizable:after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #007bff;
+    border-radius: 50%;
+    bottom: -5px;
+    right: -5px;
+    cursor: nwse-resize;
+}
+
+.resizable-resizing {
+    outline: 2px dashed #007bff;
+    outline-offset: -2px; /* Ensures the outline stays tight around the element */
+    transition: outline 0.2s ease;
+}
+
+
+
+#ruler {
+    transition: left 0.2s, width 0.2s; /* Smooth transition for ruler position */
+}

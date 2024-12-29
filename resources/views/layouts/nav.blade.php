@@ -17,7 +17,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#">Employee</a>
+                    <a href="/employee">Employee</a>
                 </li>
 
                 <hr class="nav-divider">

@@ -2,9 +2,8 @@
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/id.css') }}">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
- 
     .container {
         padding: 1.5rem;
         display: flex;
@@ -38,98 +37,6 @@
         font-size: 14px;
         text-align: center;
         margin-top: 20px;
-    }
-
-    /* Table Styles */
-    table {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        margin-top: 20px;
-        border-collapse: collapse;
-        padding: 1rem;
-    }
-
-    table, th, td {
-        border: 1px solid #ddd;
-    }
-
-    th, td {
-        padding: 12px;
-        text-align: left;
-    }
-
-    th {
-        background-color: #f4f4f4;
-    }
-
-    /* Centering Action Buttons */
-    .action-btn {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        padding: 5px;
-    }
-
-    .action-btn i {
-        cursor: pointer;
-    }
-
-    .bold-option {
-        font-weight: bold;
-    }
-
-    .action-btn .edit-btn,
-    .action-btn .delete-btn {
-        font-size: 14px;
-        padding: 2px 8px;
-        cursor: pointer;
-        background: none;
-        border: none;
-    }
-
-    .action-btn .edit-btn {
-        color: #4d7bfb;
-    }
-
-    .action-btn .delete-btn {
-        color: #ff6347;
-    }
-
-    .action-btn .edit-btn:hover {
-        color: #45a049;
-    }
-
-    .action-btn .delete-btn:hover {
-        color: #ff4500;
-    }
-
-    /* Pagination Styles */
-    .pagination {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-        padding: 10px;
-    }
-
-    .pagination button {
-        padding: 8px 16px;
-        margin: 0 4px;
-        background-color: #4d7bfb;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .pagination button:hover {
-        background-color: #45a049;
-    }
-
-    .pagination button.disabled {
-        background-color: #ddd;
-        cursor: not-allowed;
     }
 
     /* Search Bar Styles */
@@ -231,16 +138,72 @@
         width: 100px;
         text-align: center;
     }
-    button[type="submit"] .view-btn{
-       padding:10px;
-   }
- 
+
+    .cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 1px;
+    }
+
+    .student-card {
+        width: 200px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+        padding: 10px;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+
+    .student-card:hover {
+        transform: scale(1.05);
+    }
+
+    .student-card img {
+        width: 90%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-top:10px;
+    }
+
+    .student-card .name {
+        font-weight: bold;
+        font-size: 18px;
+        margin: 8px 0;
+    }
+
+    .search-con {
+       display:flex;
+       flex-direction:column;
+       gap:10px;
+    }
+
+    .search-con button {
+     
+        border: none;
+        background: none;
+        cursor: pointer;
+        background-color: #4d7bfb;
+        padding: 10px 20px; 
+        border-radius: 5px;
+    }
+
+    .search-con button i {
+
+    }
+
 </style>
 
 <div class="container">
     <div>
         <a href="javascript:void(0);" class="create-btn" id="createBtn">
-            <span class="btn-text">Create</span>
+            <span class="btn-text">Create ID</span>
         </a>
     </div>
     <div>
@@ -248,114 +211,88 @@
     </div>
 </div>
 
-<!-- Table for displaying students -->
-<table id="studentsTable">
-    <thead>
-        <tr>
-            <th>Last Name</th>
-            <th>First Name</th>
-            <th>Course</th>
-            <th>Student ID</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @forelse($students as $student)
-        <tr>
-            <td>{{ $student->lastname }}</td>
-            <td>{{ $student->firstname }}</td>
-            <td>{{ $student->course }}</td>
-            <td>{{ $student->studentid }}</td>
-            <td class="action-btn">
-
-                <form action="{{ route('students.show', $student->id) }}" method="GET" class="view-form">
-                  <button type="submit" class="view-btn">👁️ </button>
-                </form>
-                <!-- Edit Button -->
-                <form action="{{ route('students.edit', $student->id) }}" method="GET" class="edit-form">
-                    <button type="submit" class="edit-btn">✏️</button>
-                </form>
-
-                <!-- Delete Button -->
-                <form action="{{ route('students.destroy', $student->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this student?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="delete-btn">❌</button>
-                </form>
-            </td>
-        </tr>
-        @empty
-        <tr>
-            <td colspan="5" class="no-records">No data yet</td>
-        </tr>
-        @endforelse
-    </tbody>
-</table>
-
-@if($students->isNotEmpty())
-<div class="pagination" id="paginationControls">
-    <button class="disabled">Prev</button>
-    <button>1</button>
-    <button>2</button>
-    <button>3</button>
-    <button>4</button>
-    <button>5</button>
-    <button>Next</button>
-</div>
+@if ($message = Session::get('success'))
+    <div class="alert alert-success">
+        <p>{{ $message }}</p>
+    </div>
 @endif
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<div class="cards-container">
+    @forelse($students as $student)
+        <div class="student-card" onclick="window.location='{{ route('students.show', $student->id) }}'">
+            <img src="{{ $student->proimage ? asset('storage/'.$student->proimage) : asset('images/default-avatar.png') }}" alt="Student Image">
+            <div class="name">{{ $student->firstname }} {{ $student->lastname }}</div>
+            <div class="course">{{ $student->course }}</div>
+        </div>
+    @empty
+        <div class="no-records">No data yet</div>
+    @endforelse
+</div>
 
 <div id="createModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" id="closeModalBtn">&times;</span>
-        <h2>Create Student</h2>
-        <form id="createForm" action="{{ route('students.store') }}" method="POST" enctype="multipart/form-data">
+        <h2>Enter Student ID</h2>
+
+        <!-- Search Bar for Student ID -->
+       
+        <div class="search-con">
+            <input type="text" id="searchStudentId" placeholder="Enter Student ID">
+            <button id="searchBtn">Submit</i></button>
+        </div>
+      
+        <p id="searchError" style="color: red; display: none;">Student not found. Please check the ID.</p>
+
+        <form id="createForm" action="{{ route('students.store') }}" method="POST" enctype="multipart/form-data" style="display: none;">
             @csrf
-            <label for="firstname">First Name:</label>
-            <input type="text" id="firstname" name="firstname" value="{{ old('firstname') }}">
 
-            <label for="middlename">Middle Name:</label>
-            <input type="text" id="middlename" name="middlename" value="{{ old('middlename') }}">
-
-            <label for="lastname">Last Name:</label>
-            <input type="text" id="lastname" name="lastname" value="{{ old('lastname') }}">
-
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" value="{{ old('address') }}">
-
-            <label for="course">Course:</label>
-            <select id="course" name="course">
+            <input type="text" hidden id="firstname" name="firstname" value="{{ old('firstname') }}">
+            <input type="text" hidden id="middlename" name="middlename" value="{{ old('middlename') }}">
+            <input type="text" hidden id="lastname" name="lastname" value="{{ old('lastname') }}">
+            <input type="text" hidden id="address" name="address" value="{{ old('address') }}">
+            <select id="course" hidden name="course">
                 <option value="" disabled selected class="bold-option">Choose a Course</option>
                 <option value="BSIT" {{ old('course') == 'BSIT' ? 'selected' : '' }}>BSIT</option>
                 <option value="BEED" {{ old('course') == 'BEED' ? 'selected' : '' }}>BEED</option>
                 <option value="BSED-SS" {{ old('course') == 'BSED-SS' ? 'selected' : '' }}>BSED-SS</option>
-                <option value="BSED-MATH" {{ old('course') == 'BSED-MATH' ? 'selected' : '' }}>BSED-MATH</option>
+                <option value="BSED-Math" {{ old('course') == 'BSED-Math' ? 'selected' : '' }}>BSED-MATH</option>
             </select>
 
             <div id="courseColor" class="course-color"></div>
-
-            <label for="studentid">Student ID:</label>
-            <input type="text" id="studentid" name="studentid" value="{{ old('studentid') }}">
-
-            <label for="contact">Contact number:</label>
-            <input type="text" id="contact" name="contact" value="{{ old('contact') }}">
-
-            <label for="econtact">Emergency contact number:</label>
-            <input type="text" id="econtact" name="econtact" value="{{ old('econtact') }}">
-
-            <label for="ename">Emergency contact person:</label>
-            <input type="text" id="ename" name="ename" value="{{ old('ename') }}">
-
-            <label for="datebirth">Date of Birth:</label>
-            <input type="date" id="datebirth" name="datebirth" value="{{ old('datebirth') }}">
+            <input type="text" hidden id="studentid" name="studentid" value="{{ old('studentid') }}">
+            <input type="text" hidden id="contact" name="contact" value="{{ old('contact') }}">
+            <input type="text" hidden id="econtact" name="econtact" value="{{ old('econtact') }}">
+            <input type="text" hidden id="birthdate" name="datebirth" value="{{ old('datebirth') }}">
+            <input type="text" hidden id="ename" name="ename" value="{{ old('ename') }}">
 
             <label for="signature">Signature:</label>
             <input type="file" id="signature" name="signature">
+            @if ($errors->has('signature'))
+                <span class="text-danger">{{ $errors->first('signature') }}</span>
+            @endif
 
-            <label for="qr">QR Code:</label>
+            <!-- <label for="qr">Qr Code:</label>
             <input type="file" id="qr" name="qr">
+            @if ($errors->has('qr'))
+                <span class="text-danger">{{ $errors->first('qr') }}</span>
+            @endif -->
 
             <label for="proimage">Profile Image:</label>
             <input type="file" id="proimage" name="proimage">
+            @if ($errors->has('proimage'))
+                <span class="text-danger">{{ $errors->first('proimage') }}</span>
+            @endif
 
             <button type="submit">Submit</button>
         </form>
@@ -368,6 +305,18 @@
     const closeModalBtn = document.getElementById('closeModalBtn');
     const courseSelect = document.getElementById('course');
     const courseColorDiv = document.getElementById('courseColor');
+    const createForm = document.getElementById('createForm');
+    const searchStudentId = document.getElementById('searchStudentId');
+    const searchError = document.getElementById('searchError');
+    const firstnameInput = document.getElementById('firstname');
+    const middlenameInput = document.getElementById('middlename');
+    const lastnameInput = document.getElementById('lastname');
+    const addressInput = document.getElementById('address');
+    const studentidInput = document.getElementById('studentid');
+    const contactInput = document.getElementById('contact');
+    const econtactInput = document.getElementById('econtact');
+    const birthdateInput = document.getElementById('birthdate');
+    const enameInput = document.getElementById('ename');
 
     createBtn.addEventListener('click', () => {
         modal.style.display = 'block';
@@ -383,27 +332,57 @@
         }
     });
 
-    courseSelect.addEventListener('change', (e) => {
-        const course = e.target.value;
-        if (course) {
-            const firstOption = courseSelect.querySelector('option[value=""]');
-            if (firstOption) {
-                firstOption.style.display = 'none';
+    const searchBtn = document.getElementById('searchBtn');
+    searchBtn.addEventListener('click', () => {
+        const studentId = searchStudentId.value.trim();
+        if (!studentId) {
+            alert('Please enter a Student ID.');
+            return;
+        }
+
+        const apiKey = '{{ (config('system.api_key')) }}';
+
+        fetch(`https://api-portal.mlgcl.edu.ph/api/external/student-list?student_id=${studentId}`, {
+            method: 'GET',
+            headers: {
+                'Origin': 'http://idmaker.test',
+                'x-api-key': apiKey,
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Student not found.');
             }
-        }
-        if (course === 'BSIT') {
-            courseColorDiv.style.backgroundColor = 'orange';
-            courseColorDiv.textContent = 'BSIT';
-        } else if (course === 'BEED') {
-            courseColorDiv.style.backgroundColor = '#5ec5fc';
-            courseColorDiv.textContent = 'BEED';
-        } else if (course === 'BSED-MATH') {
-            courseColorDiv.style.backgroundColor = 'green';
-            courseColorDiv.textContent = 'BSED-MATH';
-        } else if (course === 'BSED-SS') {
-            courseColorDiv.style.backgroundColor = 'purple';
-            courseColorDiv.textContent = 'BSED-SS';
-        }
+            return response.json();
+        })
+        .then(data => {
+            const student = data.data.find(s => s.student_identification_number[0]?.student_id === studentId);
+            if (student) {
+                // Populate form fields with student data
+                firstnameInput.value = student.first_name || '';
+                middlenameInput.value = student.middle_name || '';
+                lastnameInput.value = student.last_name || '';
+                addressInput.value = student.address?.barangay ? `${student.address.barangay}, ${student.address.municipality}, ${student.address.province}` : '';
+                courseSelect.value = student.course?.code || '';
+                studentidInput.value = student.student_identification_number[0]?.student_id || '';
+                contactInput.value = student.contact_number || '';
+                econtactInput.value = student.emergency_contact?.number || '';
+                birthdateInput.value = student.birthdate || '';
+                enameInput.value = student.emergency_contact?.name || '';
+                searchError.style.display = 'none';
+
+
+                createForm.style.display = 'block';
+            } else {
+                throw new Error('Student not found.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            searchError.style.display = 'block';
+            createForm.style.display = 'none'; 
+        });
     });
 </script>
 
