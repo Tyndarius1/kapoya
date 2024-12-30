@@ -117,6 +117,7 @@ class StudentController extends Controller
             'signature' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:1024',
             'qr' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:1024',
             'proimage' => 'nullable|image|max:2048',
+          
         ]);
 
         $student = Student::findOrFail($id);
@@ -131,6 +132,7 @@ class StudentController extends Controller
         $student->econtact = $request->econtact;
         $student->ename = $request->ename;
         $student->datebirth = $request->datebirth;
+      
 
       
         if ($request->hasFile('signature')) {
@@ -173,4 +175,38 @@ class StudentController extends Controller
         $student->delete();
         return redirect()->route('students.index')->with('success', 'Student deleted successfully.');
     }
+
+
+
+    // public function saveEdits(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //         'texts' => 'required|array',
+    //         'images' => 'nullable|array',
+    //     ]);
+
+    //     $student = Student::find(auth()->user()->id);
+
+    //     // Update text data
+    //     foreach ($validatedData['texts'] as $key => $value) {
+    //         if (property_exists($student, $key)) {
+    //             $student->$key = $value;
+    //         }
+    //     }
+
+    //     // Update images
+    //     if (isset($validatedData['images'])) {
+    //         foreach ($validatedData['images'] as $key => $image) {
+    //             if ($image instanceof \Illuminate\Http\UploadedFile) {
+    //                 // Handle file upload
+    //                 $path = $image->store("students/{$student->id}", 'public');
+    //                 $student->$key = $path;
+    //             }
+    //         }
+    //     }
+
+    //     $student->save();
+
+    //     return response()->json(['message' => 'Edits saved successfully!'], 200);
+    // }
 }

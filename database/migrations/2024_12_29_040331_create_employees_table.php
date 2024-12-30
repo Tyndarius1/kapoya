@@ -17,10 +17,17 @@ return new class extends Migration
         $table->string('middlename')->nullable();
         $table->string('lastname');
         $table->string('address');
+        $table->string('contact');
+        $table->string('econtact');
+        $table->string('position');
         $table->string('employeeid')->unique();
         $table->string('datebirth');
+        $table->string('ename');
+        $table->string('qr')->nullable();
         $table->string('signature')->nullable();
         $table->string('proimage')->nullable();
+        // 
+     
         $table->timestamps();
         });
     }

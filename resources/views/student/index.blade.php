@@ -192,11 +192,11 @@
         background-color: #4d7bfb;
         padding: 10px 20px; 
         border-radius: 5px;
+        color:white;
+        font-size: 20px;
     }
 
-    .search-con button i {
-
-    }
+   
 
 </style>
 
@@ -243,16 +243,21 @@
 <div id="createModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" id="closeModalBtn">&times;</span>
-        <h2>Enter Student ID</h2>
+        <div style="text-align: center;">
+          <img src="{{ asset('img/student.png') }}" alt="" style="width: 50px; height: auto;">
+        </div>
+
+        <h2 style="text-align: center;">Enter Student ID</h2>
 
         <!-- Search Bar for Student ID -->
        
         <div class="search-con">
             <input type="text" id="searchStudentId" placeholder="Enter Student ID">
+          
             <button id="searchBtn">Submit</i></button>
         </div>
       
-        <p id="searchError" style="color: red; display: none;">Student not found. Please check the ID.</p>
+        <p id="searchError" style="color: red; display: none;">Wa nakit an ang imong gipangita balik lang ugma</p>
 
         <form id="createForm" action="{{ route('students.store') }}" method="POST" enctype="multipart/form-data" style="display: none;">
             @csrf
@@ -359,7 +364,7 @@
         .then(data => {
             const student = data.data.find(s => s.student_identification_number[0]?.student_id === studentId);
             if (student) {
-                // Populate form fields with student data
+             
                 firstnameInput.value = student.first_name || '';
                 middlenameInput.value = student.middle_name || '';
                 lastnameInput.value = student.last_name || '';

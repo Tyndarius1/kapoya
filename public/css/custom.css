@@ -113,7 +113,7 @@ body{
     margin-top: 15px;
 }
 
-.extra-details .dob{
+.extra-details .date{
     display: flex;
     flex-direction: column;
 }
@@ -126,7 +126,7 @@ body{
     margin: 0;
 }
 
-.extra-details .address{
+.extra-details .brgy{
     display: flex;
     align-items: flex-end;
 }

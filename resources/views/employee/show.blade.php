@@ -11,8 +11,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="{{ asset('css/functionality.css') }}">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
-<meta name="csrf-token" content="{{ csrf_token() }}">
-
 
 <style>
     body {
@@ -152,66 +150,16 @@
 </style>
 
 
-
 <div class="sidebar">
 
     <a href=""><i class="fas fa-arrow-left"></i></a>
-    <a href="/student"> <i class="fas fa-arrow-left" style="color: blue; font-size: 35px;"></i></a>
+    <a href="/employee"> <i class="fas fa-arrow-left" style="color: blue; font-size: 35px;"></i></a>
     <a href="#" data-toggle="modal" data-target="#editModal"><i class="fa fa-edit"></i></a> <!-- Edit button -->
     <a href="#"> <i class="fa fa-print"></i></a>
-    <a href="#" class="save-button"><i class="fa fa-save"></i></a>
-
+    <a href="#"><i class="fa fa-save"></i></a>
 </div>
 
-<script>
-   document.querySelector('.save-button').addEventListener('click', function() {
-    const editedTexts = {};
-    const editableElements = document.querySelectorAll('[contenteditable="true"]');
-    editableElements.forEach(element => {
-        editedTexts[element.id] = element.innerText.trim();
-    });
 
-    const editedImages = [];
-    const draggableImages = document.querySelectorAll('#draggableImage, #draggableImageSignature');
-    draggableImages.forEach(img => {
-        editedImages.push({
-            id: img.id,
-            src: img.src,
-            position: {
-                x: img.style.left,
-                y: img.style.top
-            },
-            size: {
-                width: img.style.width,
-                height: img.style.height
-            }
-        });
-    });
-
-    // Send data to the backend
-    saveEditsToServer({ texts: editedTexts, images: editedImages });
-  });
-
-  function saveEditsToServer(data) {
-    fetch('/students.saveEdits', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert('Edits saved successfully!');
-        console.log(document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
-    })
-    .catch(error => {
-        console.error('Error saving edits:', error);
-        alert('Failed to save edits.');
-    });
-  }
-</script>
 <div class="content">
     <div class="card mt-2">
         <div class="card-body" id="canvas-container">
@@ -272,19 +220,23 @@
                         <p class="barag">Brgy. Atabay, Hilongos, Leyte</p>
                     </div>
                     <div class="qr-code">
-                        <img src="qr.png" alt="Student QR Code">
+                       @if ($employee->qr)
+                        <img src="{{ asset('storage/' . $employee->qr) }}" alt="QR Code" width="30%">
+                       @else
+                        <p>No qr codde available.</p>
+                       @endif
                     </div>
                     <div class="signature" >
-                    @if ($student->signature)
-                    <img src="{{ asset('storage/' . $student->signature) }}" alt="QR Code" width="30%" id="draggableImageSignature">
+                    @if ($employee->signature)
+                    <img src="{{ asset('storage/' . $employee->signature) }}" alt="QR Code" width="30%" id="draggableImageSignature">
                     @else
                         <p>No signature available.</p>
                     @endif
                     </div>
                     <div class="main-image">
                         <div class="image">
-                        @if ($student->proimage)
-                            <img src="{{ asset('storage/' . $student->proimage) }}" alt="QR Code" width="30%" id="draggableImage">
+                        @if ($employee->proimage)
+                            <img src="{{ asset('storage/' . $employee->proimage) }}" alt="QR Code" width="30%" id="draggableImage">
                         @else
                             <p>No qr code available.</p>
                         @endif
@@ -292,50 +244,37 @@
                     </div> 
                 </div>  
             </div>
-            <div class="mainconsaubos" 
-            style="background-color: 
-                @if($student->course == 'BSIT') 
-                    orange; 
-                @elseif($student->course == 'BEED') #5ec5fc; 
-                @elseif($student->course == 'BSED-Math') 
-                    green; 
-                @elseif($student->course == 'BSED-SS') 
-                    purple; 
-                @else 
-                    transparent; 
-                @endif">
-    <div class="main-two">
-        <div class="date editable" contenteditable="true" id="editable-text-date">
-            <p>Date of birth:<br>{{ $student->datebirth }}</p>
-        </div>
-        <div class="main-name">
-            <div class="name editable" contenteditable="true" id="editable-text-name">
-                <h3 class="text-uppercase">{{ $student->lastname }}<br class="text-uppercase">{{ $student->firstname }} {{ strtoupper(substr($student->middlename, 0, 1)) }}.</h3>
+            <div class="mainconsaubos">
+                <div class="main-two">
+                    <div class="date editable" contenteditable="true" id="editable-text-date">
+                        <p>Date of birth:<br>{{ $employee->datebirth }}</p>
+                    </div>
+                    <div class="main-name">
+                        <div class="name editable" contenteditable="true" id="editable-text-name">
+                            <h3 class="text-uppercase">{{ $employee->lastname }}<br class="text-uppercase">{{ $employee->firstname }} {{ strtoupper(substr($employee->middlename, 0, 1)) }}.</h3>
+                        </div>
+                        <div class="brgy editable" contenteditable="true" id="editable-text-brgy">
+                            <p>{{ $employee->address }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="numcourse">
+                    <div class="number">
+                        <h4> {{ $employee->employeeid }}</h4>
+                    </div>
+                    <div class="course">
+                        <h4> {{ $employee->position }}</h4>
+                    </div>
+                </div>
+                <div class="last">
+                    <div class="num1">
+                        <p>⁦https://mlgcl.edu.ph⁩</p>
+                    </div>
+                    <div class="num2">
+                        <p>mlg@mlgcl.edu.ph</p>
+                    </div>
+                </div>
             </div>
-            <div class="brgy editable" contenteditable="true" id="editable-text-brgy">
-                <p>{{ $student->address }}</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="numcourse">
-        <div class="number">
-            <h4> {{ $student->studentid }}</h4>
-        </div>
-        <div class="course">
-            <h4> {{ $student->course }}</h4>
-        </div>
-    </div>
-    <div class="last">
-        <div class="num1">
-            <p>⁦https://mlgcl.edu.ph⁩</p>
-        </div>
-        <div class="num2">
-            <p>mlg@mlgcl.edu.ph</p>
-        </div>
-    </div>
-</div>
-
         </div>
         <!-- Back of the ID -->
         <div class="likod">
@@ -383,8 +322,8 @@
                         <p>
                             In case of emergency,<br>please contact <br>
                             <span class="editable" id="editable-contact">
-                                <span id="editable-name" contenteditable="true" class="text-uppercase">{{ $student->ename }}</span> <br />
-                                <span id="editable-number" contenteditable="true">{{ $student->econtact }}</span>
+                                <span id="editable-name" contenteditable="true" class="text-uppercase">{{ $employee->ename }}</span> <br />
+                                <span id="editable-number" contenteditable="true">{{ $employee->econtact }}</span>
                             </span>
                         </p>
                     </div>
@@ -417,67 +356,62 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="createForm" action="{{ route('students.update', $student->id) }}" method="POST" enctype="multipart/form-data">
+                <form id="createForm" action="{{ route('employees.update', $employee->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT') 
                     <label for="firstname">First Name:</label>
-                    <input type="text" id="firstname" name="firstname" value="{{ old('firstname', $student->firstname) }}">
+                    <input type="text" id="firstname" name="firstname" value="{{ old('firstname', $employee->firstname) }}">
 
                     <label for="middlename">Middle Name:</label>
-                    <input type="text" id="middlename" name="middlename" value="{{ old('middlename', $student->middlename) }}">
+                    <input type="text" id="middlename" name="middlename" value="{{ old('middlename', $employee->middlename) }}">
 
                     <label for="lastname">Last Name:</label>
-                    <input type="text" id="lastname" name="lastname" value="{{ old('lastname', $student->lastname) }}">
+                    <input type="text" id="lastname" name="lastname" value="{{ old('lastname', $employee->lastname) }}">
 
                     <label for="address">Address:</label>
-                    <input type="text" id="address" name="address" value="{{ old('address', $student->address) }}">
+                    <input type="text" id="address" name="address" value="{{ old('address', $employee->address) }}">
 
-                    <label for="course">Course:</label>
-                    <select id="course" name="course">
-                        <option value="" disabled class="bold-option">Choose a Course</option>
-                        <option value="BSIT" {{ old('course', $student->course) == 'BSIT' ? 'selected' : '' }}>BSIT</option>
-                        <option value="BEED" {{ old('course', $student->course) == 'BEED' ? 'selected' : '' }}>BEED</option>
-                        <option value="BSED-SS" {{ old('course', $student->course) == 'BSED-SS' ? 'selected' : '' }}>BSED-SS</option>
-                        <option value="BSED-Math" {{ old('course', $student->course) == 'BSED-Math' ? 'selected' : '' }}>BSED-MATH</option>
-                    </select>
+               
 
-                    <div id="courseColor" class="course-color"></div>
-
-                    <label for="studentid">Student ID:</label>
-                    <input type="text" id="studentid" name="studentid" value="{{ old('studentid', $student->studentid) }}">
 
                     <label for="contact">Contact number:</label>
-                    <input type="text" id="contact" name="contact" value="{{ old('contact', $student->contact) }}">
+                    <input type="text" id="contact" name="contact" value="{{ old('contact', $employee->contact) }}">
 
                     <label for="econtact">Emergency contact number:</label>
-                    <input type="text" id="econtact" name="econtact" value="{{ old('econtact', $student->econtact) }}">
-
-                    <label for="ename">Emergency contact person:</label>
-                    <input type="text" id="ename" name="ename" value="{{ old('ename', $student->ename) }}">
+                    <input type="text" id="econtact" name="econtact" value="{{ old('econtact', $employee->econtact) }}">
+                    
+                    <label for="position">Position:</label>
+                    <input type="text" id="position" name="position" value="{{ old('position', $employee->position) }}">
+   
+                    <label for="employeeid">Employee ID:</label>
+                    <input type="text" id="employeeid" name="employeeid" value="{{ old('employeeid', $employee->employeeid) }}">
 
                     <label for="datebirth">Date of Birth:</label>
-                    <input type="date" id="datebirth" name="datebirth" value="{{ old('datebirth', $student->datebirth) }}">
+                    <input type="date" id="datebirth" name="datebirth" value="{{ old('datebirth', $employee->datebirth) }}">
+
+                    <label for="ename">Emergency contact person:</label>
+                    <input type="text" id="ename" name="ename" value="{{ old('ename', $employee->ename) }}">
 
                     <label for="signature">Signature:</label>
                     <input type="file" id="signature" name="signature">
-                    @if ($student->signature)
-                        <img src="{{ asset('storage/' . $student->signature) }}" alt="QR Code" width="30%">
+                    @if ($employee->signature)
+                        <img src="{{ asset('storage/' . $employee->signature) }}" alt="QR Code" width="30%">
                         @else
                         <p>No signature code available.</p>
                     @endif
 
                                     <label for="qr">QR Code:</label>
                                     <input type="file" id="qr" name="qr">
-                                    @if ($student->qr)
-                        <img src="{{ asset('storage/' . $student->qr) }}" alt="QR Code" width="30%">
+                                    @if ($employee->qr)
+                        <img src="{{ asset('storage/' . $employee->qr) }}" alt="QR Code" width="30%">
                     @else
                         <p>No QR code available.</p>
                     @endif
 
                                     <label for="proimage">Profile Image:</label>
                                     <input type="file" id="proimage" name="proimage">
-                                    @if ($student->proimage)
-                        <img src="{{ asset('storage/' . $student->proimage) }}" alt="QR Code" width="30%">
+                                    @if ($employee->proimage)
+                        <img src="{{ asset('storage/' . $employee->proimage) }}" alt="QR Code" width="30%">
                     @else
                         <p>No profile image available.</p>
                     @endif
