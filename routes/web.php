@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\IdController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -17,5 +18,4 @@ Route::get('/employee', [App\Http\Controllers\EmployeeController::class, 'index'
 Route::resource('students', StudentController::class);
 Route::resource('employees', EmployeeController::class);
 Route::post('/save-edits', [StudentController::class, 'saveEdits'])->name('students.saveEdits');
-
-
+Route::get('/front/{id}', [IdController::class, 'index']);

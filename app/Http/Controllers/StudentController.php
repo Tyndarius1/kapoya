@@ -46,7 +46,6 @@ class StudentController extends Controller
             'ename' => 'required|string|max:50',
             'signature' => 'nullable|image|mimes:jpeg,png,jpg,gif,jfif,svg|max:2048',
             'proimage' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'qr' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         // Store files if provided
@@ -68,7 +67,6 @@ class StudentController extends Controller
             'ename' => $validated['ename'],
             'signature' => $signaturePath,
             'proimage' => $proImagePath,
-            // 'qr' => $qrPath,
         ]);
 // dd($qrPath);
         // Redirect with success message
@@ -87,11 +85,14 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
+
+
     public function show(string $id)
     {
          $student = Student::findOrFail($id);
         return view('student.show', compact('student'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -118,9 +119,8 @@ class StudentController extends Controller
             'ename' => 'required|string|max:255',
             'datebirth' => 'required|date',
             'signature' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:1024',
-            'qr' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:1024',
-            'proimage' => 'nullable|image|max:2048',
-          
+            'proimage' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
         ]);
 
         $student = Student::findOrFail($id);
@@ -135,36 +135,28 @@ class StudentController extends Controller
         $student->econtact = $request->econtact;
         $student->ename = $request->ename;
         $student->datebirth = $request->datebirth;
-      
-      
-      
-        if ($request->hasFile('signature')) {
-            if ($student->signature && Storage::exists($student->signature)) {
-                Storage::delete($student->signature);
-            }
-            $student->signature = $request->file('signature')->store('signature');
-        }
 
-        if ($request->hasFile('qr')) {
-            if ($student->qr && Storage::exists($student->qr)) {
-                Storage::delete($student->qr);
+
+
+        if ($request->hasFile('signature')) {
+            if ($student->signature && Storage::exists('public/' . $student->signature)) {
+                Storage::delete('public/' . $student->signature);
             }
-            $student->qr = $request->file('qr')->store('qr');
+            $student->signature = $request->file('signature')->store('signature', 'public');
         }
 
         if ($request->hasFile('proimage')) {
-            if ($student->proimage && Storage::exists($student->proimage)) {
-                Storage::delete($student->proimage);
+            if ($student->proimage && Storage::exists('public/' . $student->proimage)) {
+                Storage::delete('public/' . $student->proimage);
             }
-            $student->proimage = $request->file('proimage')->store('proimage');
+            $student->proimage = $request->file('proimage')->store('proimage', 'public');
         }
-
         $student->save();
 
 
         return redirect()->route('students.show', $student->id)->with('success', 'Student updated successfully');
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -174,7 +166,7 @@ class StudentController extends Controller
         $student = Student::find($id);
         if (!$student) {
             return redirect()->route('students.index')->with('error', 'Student not found.');
-        }    
+        }
         $student->delete();
         return redirect()->route('students.index')->with('success', 'Student deleted successfully.');
     }

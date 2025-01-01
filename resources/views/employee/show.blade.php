@@ -42,7 +42,7 @@
         flex-direction: column;
         align-items: center;
         padding-top: 20px;
-      
+
     }
     .sidebar a {
         color: #6A6E71;
@@ -52,7 +52,7 @@
         text-decoration: none;
         margin: 10px 0;
     }
- 
+
 
     /* Content container */
     .content {
@@ -170,15 +170,15 @@
         <span class="tooltip">Remove Background</span>
     </button>
     <button id="resizeBtn">
-        <i class="fas fa-expand"></i> 
-        <span class="tooltip">Resize</span> 
+        <i class="fas fa-expand"></i>
+        <span class="tooltip">Resize</span>
     </button>
     <button id="resetBtn">
-        <i class="fas fa-compress"></i> 
-        <span class="tooltip">Reset Size</span> 
+        <i class="fas fa-compress"></i>
+        <span class="tooltip">Reset Size</span>
     </button>
     <button id="flipBtn">
-        <i class="fas fa-arrows-alt-v"></i> 
+        <i class="fas fa-arrows-alt-v"></i>
         <span class="tooltip">Flip</span>
     </button>
 </div>
@@ -212,7 +212,7 @@
 
 @if ($message = Session::get('success'))
     <script>
-       
+
         Swal.fire({
         position: "top-end",
         icon: "success",
@@ -227,7 +227,7 @@
     .qr-code img{
         width: 85px;
         height: 85px;
-      
+
     }
      .logo img{
         margin-right:10px;
@@ -236,7 +236,7 @@
         margin-top:-10px;
         margin-right:8px;
     }
- 
+
 </style>
 <!-- Student ID -->
 <div class="pinakamain">
@@ -250,10 +250,10 @@
 								OF LEARNING, INC<br>
                                 Brgy. Atabay, Hilongos, Leyte
 							</p>
-						
+
 						</div>
 						<div class="qr-code">
-                        <img id="qr-code" src="" alt="Student QR Code">
+                        <img id="qr-code" src="{{ asset('img/qr.png')}}" alt="Student QR Code">
 						</div>
 						<div class="signature">
 							<img src="{{ asset('storage/' . $employee->signature) }}" alt="Signature" id="draggableImageSignature" />
@@ -287,9 +287,27 @@
                     }
                 </style>
 				<div class="circle"></div>
-				<div class="mainconsaubos"  style="background-color: 
-                        {{ $employee->color ?? 'transparent' }}">
-                    
+
+                <div class="mainconsaubos" style="background-color:
+                @if($employee->position == 'Security Guard')
+                    orange;
+                @elseif($employee->position == 'Administrator')
+                    #5ec5fc;
+                @elseif($employee->position == 'Department Head')
+                    @if($employee->sector == 'BSIT')
+                        orange;
+                    @elseif($employee->sector == 'BEED')
+                        blue;
+                    @else
+                        green;
+                    @endif
+                @elseif($employee->position == 'Instructor')
+                    purple;
+                @else
+                    transparent;
+                @endif">
+
+
 					<div class="main-two">
 						<div class="main-name">
 							<div class="name editable" contenteditable="true" id="editable-text-name">
@@ -329,7 +347,7 @@
 
                 .tableNo table{
                     margin-top:-10px;
-        
+
                 }
                 .parag2{
                     margin-top:-8px;
@@ -425,12 +443,12 @@
 						<svg width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none">
 							<path
 								fill="#1877F2"
-								d="M15 8a7 7 0 00-7-7 7 7 0 00-1.094 13.915v-4.892H5.13V8h1.777V6.458c0-1.754 
+								d="M15 8a7 7 0 00-7-7 7 7 0 00-1.094 13.915v-4.892H5.13V8h1.777V6.458c0-1.754
                             1.045-2.724 2.644-2.724.766 0 1.567.137 1.567.137v1.723h-.883c-.87 0-1.14.54-1.14 1.093V8h1.941l-.31 2.023H9.094v4.892A7.001 7.001 0 0015 8z"
 							/>
 							<path
 								fill="#ffffff"
-								d="M10.725 10.023L11.035 8H9.094V6.687c0-.553.27-1.093 1.14-1.093h.883V3.87s-.801-.137-1.567-.137c-1.6 0-2.644.97-2.644 
+								d="M10.725 10.023L11.035 8H9.094V6.687c0-.553.27-1.093 1.14-1.093h.883V3.87s-.801-.137-1.567-.137c-1.6 0-2.644.97-2.644
                             2.724V8H5.13v2.023h1.777v4.892a7.037 7.037 0 002.188 0v-4.892h1.63z"
 							/>
 						</svg>
@@ -457,7 +475,7 @@
             <div class="modal-body">
                 <form id="createForm" action="{{ route('employees.update', $employee->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT') 
+                    @method('PUT')
                     <label for="firstname">First Name:</label>
                     <input type="text" id="firstname" name="firstname" value="{{ old('firstname', $employee->firstname) }}">
 
@@ -470,7 +488,7 @@
                     <label for="address">Address:</label>
                     <input type="text" id="address" name="address" value="{{ old('address', $employee->address) }}">
 
-               
+
 
 
                     <label for="contact">Contact number:</label>
@@ -478,10 +496,10 @@
 
                     <label for="econtact">Emergency contact number:</label>
                     <input type="text" id="econtact" name="econtact" value="{{ old('econtact', $employee->econtact) }}">
-                    
+
                     <label for="position">Position:</label>
                     <input type="text" id="position" name="position" value="{{ old('position', $employee->position) }}">
-   
+
                     <label for="employeeid">Employee ID:</label>
                     <input type="text" id="employeeid" name="employeeid" value="{{ old('employeeid', $employee->employeeid) }}">
 
@@ -517,7 +535,7 @@
 
                     <button type="submit">Update</button>
                 </form>
-             
+
             </div>
         </div>
     </div>

@@ -185,12 +185,12 @@
     }
 
     .search-con button {
-     
+
         border: none;
         background: none;
         cursor: pointer;
         background-color: #4d7bfb;
-        padding: 10px 20px; 
+        padding: 10px 20px;
         border-radius: 5px;
     }
 
@@ -217,7 +217,7 @@
 
 @if ($message = Session::get('success'))
     <script>
-       
+
         Swal.fire({
         position: "top-end",
         icon: "success",
@@ -239,7 +239,7 @@
                     @foreach ($errors->all() as $error)
                         {{ $error }}
                     @endforeach
-            
+
             `,
             showConfirmButton: false,
             timer: 2000
@@ -266,15 +266,15 @@
 
         <h2 style="text-align: center;">Enter Employee Name</h2>
 
-      
-       
+
+
         <div class="search-con">
             <input type="text" id="searchEmployeeName" placeholder="Enter Name">
             <ul id="suggestionsList" style="list-style-type: none; padding: 0; margin-top: 5px; background: white; border: 1px solid #ccc; max-height: 150px; overflow-y: auto;"></ul>
         </div>
         <p id="searchError" style="color: red; display: none;">Employee not found. Please try again.</p>
 
-      
+
         <p id="searchError" style="color: red; display: none;">Employee not found. balik ugma.</p>
 
         <form id="createForm" action="{{ route('employees.store') }}" method="POST" enctype="multipart/form-data" style="display: none;">
@@ -287,30 +287,45 @@
             <input type="text" hidden id="contact" name="contact" value="{{ old('contact') }}">
             <input type="text" hidden id="econtact" name="econtact" value="{{ old('econtact') }}">
             <input type="text" hidden id="ename" name="ename" value="{{ old('ename') }}">
-           
+
             <input type="text" hidden id="birthdate" name="datebirth" value="{{ old('datebirth') }}">
-           
+
             <h2 id="display"></h2>
             <input  hidden type="file" id="qr" name="qr">
-                @if (isset($employee->qr_code))         
+                @if (isset($employee->qr_code))
                     <img src="{{ asset('storage/'.$employee->qr_code) }}" alt="QR Code" style="max-width: 200px; margin-top: 10px;">
                 @endif
 
-            <label for="position">Position</label>
-            <input type="text"id="position" name="position" value="{{ old('position') }}">
-            <style>
-               
-            </style>
-            <div class="color">             
-            <button class="text-color-picker" title="Change Text Color">
-                <input 
-                    type="color" 
-                    name="color" 
-                    id="text-color-picker" 
-                    value="{{ $employee->color ?? '#000000' }}" 
-                >
-            </button> 
+
+                <div class="position">
+                    <label for="position" title="position">Select a Position:</label>
+                    <select name="position" id="position">
+                    <option value="Security Guard" {{ isset($employee) && $employee->position == 'Security Guard' ? 'selected' : '' }}>Security Guard</option>
+                    <option value="Administrator" {{ isset($employee) && $employee->position == 'Administrator' ? 'selected' : '' }}>Administrator</option>
+                    <option value="Department Head" {{ isset($employee) && $employee->position == 'Department Head' ? 'selected' : '' }}>Department Head</option>
+                    <option value="Instructor" {{ isset($employee) && $employee->position == 'Instructor' ? 'selected' : '' }}>Instructor</option>
+                  </select>
+
+                </div>
+                <div class="sector" style="{{ isset($employee) && $employee->position == 'Department Head' ? '' : 'display: none;' }}">
+                <label for="sector">Select Sector:</label>
+                <select name="sector" id="sector">
+                    <option value="BSIT" {{ isset($employee) && $employee->sector == 'BSIT' ? 'selected' : '' }}>BSIT</option>
+                    <option value="BEED" {{ isset($employee) && $employee->sector == 'BEED' ? 'selected' : '' }}>BEED</option>
+                </select>
             </div>
+
+        <script>
+            document.getElementById('position').addEventListener('change', function () {
+            const sectorDiv = document.querySelector('.sector');
+            if (this.value === 'Department Head') {
+                sectorDiv.style.display = 'block';
+            } else {
+                sectorDiv.style.display = 'none';
+            }
+        });
+
+        </script>
 
             <label for="employeeid">Employee ID</label>
             <input type="text"id="employeeid" name="employeeid" value="{{ old('employeeid') }}">
@@ -347,11 +362,11 @@
     const econtactInput = document.getElementById('econtact');
     const birthdateInput = document.getElementById('birthdate');
     const display = document.getElementById('display');
-   
-  
+
+
     const qrPreview = document.querySelector('img[alt="QR Code"]');
     if (qrPreview) {
- 
+
         qrPreview.src = employee.qr_code ? asset('storage/' + employee.qr_code) : '';
     }
         const enameInput = document.getElementById('ename');
@@ -418,7 +433,7 @@
         }
     });
 
-   
+
     function selectEmployee(employee) {
         firstnameInput.value = employee.first_name || '';
         middlenameInput.value = employee.middle_name || '';
@@ -430,9 +445,9 @@
         enameInput.value = employee.emergency_contact?.name || '';
         display.textContent = (employee.first_name || '') + ' ' + (employee.last_name || '');
 
-      
+
         createForm.style.display = 'block';
-        suggestionsList.innerHTML = ''; 
+        suggestionsList.innerHTML = '';
     }
 </script>
 

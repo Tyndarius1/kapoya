@@ -21,5 +21,6 @@ class Employee extends Model
         'signature',
         'proimage',
         'color',
+        'sector',
     ];
 }

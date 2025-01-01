@@ -35,18 +35,18 @@ class EmployeeController extends Controller
             'middlename' => 'nullable|string|max:255',
             'lastname' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'contact' => 'required|string|max:20',   
+            'contact' => 'required|string|max:20',
             'econtact' => 'required|string|max:20',
             'position' => 'required|string|max:255',
             'employeeid' => 'required|string|max:255|unique:employees,employeeid',
-            'datebirth' => 'required|string|max:20', 
+            'datebirth' => 'required|string|max:20',
             'ename' => 'required|string|max:50',
             'qr' => 'nullable|image|mimes:jpeg,png,jpg,gif,jfif,svg|max:2048',
             'signature' => 'nullable|image|mimes:jpeg,png,jpg,gif,jfif,svg|max:2048',
             'proimage' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'color' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'sector' => 'required|string|max:20',
         ]);
-      
+
 
         $signaturePath = $request->file('signature') ? $request->file('signature')->store('signature', 'public') : null;
         $proImagePath = $request->file('proimage') ? $request->file('proimage')->store('proimage', 'public') : null;
@@ -67,7 +67,7 @@ class EmployeeController extends Controller
             'qr' => $qrPath,
             'signature' => $signaturePath,
             'proimage' => $proImagePath,
-            'color' => $validated['color'],
+            'sector' => $validated['sector'],
         ]);
         return redirect()->route('employee.index')->with('success', 'Employee created successfully!');
     } catch (\Exception $e) {
@@ -113,7 +113,7 @@ class EmployeeController extends Controller
             'qr' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:1024',
             'signature' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:1024',
             'proimage' => 'nullable|image|max:2048',
-          
+
         ]);
 
         $employee = Employee::findOrFail($id);
@@ -128,11 +128,11 @@ class EmployeeController extends Controller
         $employee->employeeid = $request->employeeid;
         $employee->datebirth = $request->datebirth;
         $employee->ename = $request->ename;
-     
 
-       
 
-      
+
+
+
         if ($request->hasFile('signature')) {
             if ($employee->signature && Storage::exists($employee->signature)) {
                 Storage::delete($employee->signature);

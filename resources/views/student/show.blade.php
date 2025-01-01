@@ -4,7 +4,7 @@
 
 <!--  -->
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-<link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <!-- id functionality -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"/>
@@ -44,7 +44,7 @@
         flex-direction: column;
         align-items: center;
         padding-top: 20px;
-      
+
     }
     .sidebar a {
         color: #6A6E71;
@@ -54,7 +54,7 @@
         text-decoration: none;
         margin: 10px 0;
     }
- 
+
 
     /* Content container */
     .content {
@@ -159,58 +159,77 @@
     <a href="/student"> <i class="fas fa-arrow-left" style="color: blue; font-size: 35px;"></i></a>
     <a href="#" data-toggle="modal" data-target="#editModal"><i class="fa fa-edit"></i></a> <!-- Edit button -->
     <a href="#"> <i class="fa fa-print"></i></a>
-    <a href="#" class="save-button"><i class="fa fa-save"></i></a>
+    <a href="{{ url('/front/' . $student->id) }}"><i class="fa fa-user"></i></a>
+    <form action="{{ route('students.destroy', $student->id) }}" method="POST" id="delete-form-{{ $student->id }}">
+        @csrf
+        @method('DELETE')
+        <button type="button" style="background:none; border:none; color:gray; font-size:28px; margin-top:10px; cursor:pointer;"
+                onclick="confirmDelete({{ $student->id }})">
+            <i class="fa fa-trash"></i>
+        </button>
+    </form>
+
+
+    <script>
+        function confirmDelete(studentId) {
+            // SweetAlert2 delete confirmation
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You want to delete this student?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the delete form if confirmed
+                    document.getElementById('delete-form-' + studentId).submit();
+                }
+            });
+        }
+    </script>
 
 </div>
 
 <script>
-   document.querySelector('.save-button').addEventListener('click', function() {
-    const editedTexts = {};
-    const editableElements = document.querySelectorAll('[contenteditable="true"]');
-    editableElements.forEach(element => {
-        editedTexts[element.id] = element.innerText.trim();
-    });
-
-    const editedImages = [];
-    const draggableImages = document.querySelectorAll('#draggableImage, #draggableImageSignature');
-    draggableImages.forEach(img => {
-        editedImages.push({
-            id: img.id,
-            src: img.src,
-            position: {
-                x: img.style.left,
-                y: img.style.top
-            },
-            size: {
-                width: img.style.width,
-                height: img.style.height
-            }
+    document.querySelector('.save-button').addEventListener('click', function() {
+        const editedTexts = {};
+        document.querySelectorAll('[contenteditable="true"]').forEach(element => {
+            editedTexts[element.id] = element.innerText.trim();
         });
+
+        const editedImages = [];
+        document.querySelectorAll('#draggableImage, #draggableImageSignature').forEach(img => {
+            editedImages.push({
+                id: img.id,
+                src: img.src,
+                position: { x: img.style.left, y: img.style.top },
+                size: { width: img.style.width, height: img.style.height }
+            });
+        });
+
+        saveEditsToServer({ texts: editedTexts, images: editedImages });
     });
 
-    // Send data to the backend
-    saveEditsToServer({ texts: editedTexts, images: editedImages });
-  });
-
-  function saveEditsToServer(data) {
-    fetch('/students.saveEdits', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert('Edits saved successfully!');
-        console.log(document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
-    })
-    .catch(error => {
-        console.error('Error saving edits:', error);
-        alert('Failed to save edits.');
-    });
-  }
+    function saveEditsToServer(data) {
+        fetch('/students.saveEdits', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Edits saved successfully!');
+        })
+        .catch(error => {
+            console.error('Error saving edits:', error);
+            alert('Failed to save edits.');
+        });
+    }
 </script>
 <div class="content">
     <div class="card mt-2">
@@ -222,15 +241,15 @@
         <span class="tooltip">Remove Background</span>
     </button>
     <button id="resizeBtn">
-        <i class="fas fa-expand"></i> 
-        <span class="tooltip">Resize</span> 
+        <i class="fas fa-expand"></i>
+        <span class="tooltip">Resize</span>
     </button>
     <button id="resetBtn">
-        <i class="fas fa-compress"></i> 
-        <span class="tooltip">Reset Size</span> 
+        <i class="fas fa-compress"></i>
+        <span class="tooltip">Reset Size</span>
     </button>
     <button id="flipBtn">
-        <i class="fas fa-arrows-alt-v"></i> 
+        <i class="fas fa-arrows-alt-v"></i>
         <span class="tooltip">Flip</span>
     </button>
 </div>
@@ -261,7 +280,7 @@
 </div>
 @if ($message = Session::get('success'))
     <script>
-       
+
         Swal.fire({
         position: "top-end",
         icon: "success",
@@ -283,7 +302,7 @@
                     @foreach ($errors->all() as $error)
                         {{ $error }}
                     @endforeach
-            
+
             `,
             showConfirmButton: false,
             timer: 1500
@@ -299,9 +318,11 @@
                 <div class="one">
                     <div class="logo">
                         <img src="{{asset('img/mlg.png')}}" alt="MLG Logo">
+                        <div class="mlg-name">
                         <p class="mlg">MLG COLLEGE<br>OF LEARNING, INC</p>
                         <p class="barag">Brgy. Atabay, Hilongos, Leyte</p>
                     </div>
+                </div>
                     <div class="qr-code">
                         <img id="qr-code" src="" alt="Student QR Code">
                     </div>
@@ -320,20 +341,20 @@
                             <p>No qr code available.</p>
                         @endif
                         </div>
-                    </div> 
-                </div>  
+                    </div>
+                </div>
             </div>
-            <div class="mainconsaubos" 
-            style="background-color: 
-                @if($student->course == 'BSIT') 
-                    orange; 
-                @elseif($student->course == 'BEED') #5ec5fc; 
-                @elseif($student->course == 'BSED-Math') 
-                    green; 
-                @elseif($student->course == 'BSED-SS') 
-                    purple; 
-                @else 
-                    transparent; 
+            <div class="mainconsaubos"
+            style="background-color:
+                @if($student->course == 'BSIT')
+                    orange;
+                @elseif($student->course == 'BEED') #5ec5fc;
+                @elseif($student->course == 'BSED-Math')
+                    green;
+                @elseif($student->course == 'BSED-SS')
+                    purple;
+                @else
+                    transparent;
                 @endif">
     <div class="main-two">
         <div class="date editable" contenteditable="true" id="editable-text-date">
@@ -341,7 +362,7 @@
         </div>
         <div class="main-name">
             <div class="name editable" contenteditable="true" id="editable-text-name">
-                <h3 class="text-uppercase">{{ $student->lastname }}<br class="text-uppercase">{{ $student->firstname }} {{ strtoupper(substr($student->middlename, 0, 1)) }}.</h3>
+                <h3 class="last-name">{{ $student->lastname }}<br class="first-name">{{ $student->firstname }} {{ strtoupper(substr($student->middlename, 0, 1)) }}.</h3>
             </div>
             <div class="brgy editable" contenteditable="true" id="editable-text-brgy">
                 <p>{{ $student->address }}</p>
@@ -407,7 +428,7 @@
                         <p><span class="span">IMPORTANT REMINDERS</span> Always wear this ID while inside the school campus. <span class="span1">Do not forget your STUDENT ID NUMBER.</span>
                         </p>
                     </div>
-                    <div class="parag3">    
+                    <div class="parag3">
                         <p>If lost and found, please surrender this ID to the STUDENT AFFAIRS OFFICE. MLG College of Learning, Inc. Brgy. Atabay, Hilongos, Leyte</p>
                     </div>
                     <div class="parag4" id="editable-text-parag4">
@@ -450,7 +471,7 @@
             <div class="modal-body">
                 <form id="createForm" action="{{ route('students.update', $student->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT') 
+                    @method('PUT')
                     <label for="firstname">First Name:</label>
                     <input type="text" id="firstname" name="firstname" value="{{ old('firstname', $student->firstname) }}">
 
@@ -489,33 +510,29 @@
                     <label for="datebirth">Date of Birth:</label>
                     <input type="date" id="datebirth" name="datebirth" value="{{ old('datebirth', $student->datebirth) }}">
 
+
                     <label for="signature">Signature:</label>
                     <input type="file" id="signature" name="signature">
                     @if ($student->signature)
-                        <img src="{{ asset('storage/' . $student->signature) }}" alt="QR Code" width="30%">
+                        <img src="{{ asset('storage/' . $student->signature) }}"  width="30%">
                         @else
                         <p>No signature code available.</p>
+
                     @endif
 
-                                    <label for="qr">QR Code:</label>
-                                    <input type="file" id="qr" name="qr">
-                                    @if ($student->qr)
-                        <img id="qr-code" src="" alt="QR Code" width="30%">
-                    @else
-                        <p>No QR code available.</p>
-                    @endif
+
 
                                     <label for="proimage">Profile Image:</label>
                                     <input type="file" id="proimage" name="proimage">
                                     @if ($student->proimage)
-                        <img src="{{ asset('storage/' . $student->proimage) }}" alt="QR Code" width="30%">
+                        <img src="{{ asset('storage/' . $student->proimage) }}" width="30%">
                     @else
                         <p>No profile image available.</p>
                     @endif
 
                     <button type="submit">Update</button>
                 </form>
-             
+
             </div>
         </div>
     </div>
