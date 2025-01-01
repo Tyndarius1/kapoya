@@ -194,10 +194,11 @@
         border-radius: 5px;
     }
 
-    .search-con button i {
-
-    }
-
+    .color{
+         display: flex;
+         gap:10px;
+        flex-direction: row;
+  }
 </style>
 
 <div class="container">
@@ -211,23 +212,40 @@
     </div>
 </div>
 
+
+
+
 @if ($message = Session::get('success'))
-    <div class="alert alert-success">
-        <p>{{ $message }}</p>
-    </div>
+    <script>
+       
+        Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "{{ $message }}",
+        showConfirmButton: false,
+        timer: 1500
+        });
+    </script>
 @endif
 
 @if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+    <script>
+        Swal.fire({
+            position: "top-end",
+            icon: 'error',
+            title: '{{ $message }}',
+            html: `
+                <style="text-align: left;">
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}
+                    @endforeach
+            
+            `,
+            showConfirmButton: false,
+            timer: 2000
+        });
+    </script>
 @endif
-
 <div class="cards-container">
     @forelse($employees as $employee)
         <div class="student-card" onclick="window.location='{{ route('employees.show', $employee->id) }}'">
@@ -269,16 +287,6 @@
             <input type="text" hidden id="contact" name="contact" value="{{ old('contact') }}">
             <input type="text" hidden id="econtact" name="econtact" value="{{ old('econtact') }}">
             <input type="text" hidden id="ename" name="ename" value="{{ old('ename') }}">
-
-            <!-- <select id="course" hidden name="course">
-                <option value="" disabled selected class="bold-option">Choose a Course</option>
-                <option value="BSIT" {{ old('course') == 'BSIT' ? 'selected' : '' }}>BSIT</option>
-                <option value="BEED" {{ old('course') == 'BEED' ? 'selected' : '' }}>BEED</option>
-                <option value="BSED-SS" {{ old('course') == 'BSED-SS' ? 'selected' : '' }}>BSED-SS</option>
-                <option value="BSED-Math" {{ old('course') == 'BSED-Math' ? 'selected' : '' }}>BSED-MATH</option>
-            </select> -->
-
-            <!-- <div id="courseColor" class="course-color"></div> -->
            
             <input type="text" hidden id="birthdate" name="datebirth" value="{{ old('datebirth') }}">
            
@@ -290,6 +298,20 @@
 
             <label for="position">Position</label>
             <input type="text"id="position" name="position" value="{{ old('position') }}">
+            <style>
+               
+            </style>
+            <div class="color">             
+            <button class="text-color-picker" title="Change Text Color">
+                <input 
+                    type="color" 
+                    name="color" 
+                    id="text-color-picker" 
+                    value="{{ $employee->color ?? '#000000' }}" 
+                >
+            </button> 
+            </div>
+
             <label for="employeeid">Employee ID</label>
             <input type="text"id="employeeid" name="employeeid" value="{{ old('employeeid') }}">
             <label for="signature">Signature:</label>

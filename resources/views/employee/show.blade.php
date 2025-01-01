@@ -9,7 +9,7 @@
 <!-- id functionality -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="{{ asset('css/functionality.css') }}">
+<link rel="stylesheet" href="{{ asset('css/employee.css') }}">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 
 <style>
@@ -203,143 +203,242 @@
     <button id="align-right" title="Align Right"><i class="fas fa-align-right"></i></button>
 
     <button class="text-color-picker" title="Change Text Color">
-        <span class="icon" id="text-icon">A</span>
         <input type="color" id="text-color-picker" value="#000000">
     </button>
 </div>
-  
 
+
+
+
+@if ($message = Session::get('success'))
+    <script>
+       
+        Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "{{ $message }}",
+        showConfirmButton: false,
+        timer: 1500
+        });
+    </script>
+@endif
+
+<style>
+    .qr-code img{
+        width: 85px;
+        height: 85px;
+      
+    }
+     .logo img{
+        margin-right:10px;
+     }
+    .logo p{
+        margin-top:-10px;
+        margin-right:8px;
+    }
+ 
+</style>
 <!-- Student ID -->
-    <div class="pinakamain">
-        <div class="main-container">
-            <div class="main-one">
-                <div class="one">
-                    <div class="logo">
-                        <img src="{{asset('img/mlg.png')}}" alt="MLG Logo">
-                        <p class="mlg">MLG COLLEGE<br>OF LEARNING, INC</p>
-                        <p class="barag">Brgy. Atabay, Hilongos, Leyte</p>
-                    </div>
-                    <div class="qr-code">
-                       @if ($employee->qr)
-                        <img src="{{ asset('storage/' . $employee->qr) }}" alt="QR Code" width="30%">
-                       @else
-                        <p>No qr codde available.</p>
-                       @endif
-                    </div>
-                    <div class="signature" >
-                    @if ($employee->signature)
-                    <img src="{{ asset('storage/' . $employee->signature) }}" alt="QR Code" width="30%" id="draggableImageSignature">
-                    @else
-                        <p>No signature available.</p>
-                    @endif
-                    </div>
-                    <div class="main-image">
-                        <div class="image">
-                        @if ($employee->proimage)
-                            <img src="{{ asset('storage/' . $employee->proimage) }}" alt="QR Code" width="30%" id="draggableImage">
-                        @else
-                            <p>No qr code available.</p>
-                        @endif
-                        </div>
-                    </div> 
-                </div>  
-            </div>
-            <div class="mainconsaubos">
-                <div class="main-two">
-                    <div class="date editable" contenteditable="true" id="editable-text-date">
-                        <p>Date of birth:<br>{{ $employee->datebirth }}</p>
-                    </div>
-                    <div class="main-name">
-                        <div class="name editable" contenteditable="true" id="editable-text-name">
-                            <h3 class="text-uppercase">{{ $employee->lastname }}<br class="text-uppercase">{{ $employee->firstname }} {{ strtoupper(substr($employee->middlename, 0, 1)) }}.</h3>
-                        </div>
-                        <div class="brgy editable" contenteditable="true" id="editable-text-brgy">
-                            <p>{{ $employee->address }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="numcourse">
-                    <div class="number">
-                        <h4> {{ $employee->employeeid }}</h4>
-                    </div>
-                    <div class="course">
-                        <h4> {{ $employee->position }}</h4>
-                    </div>
-                </div>
-                <div class="last">
-                    <div class="num1">
-                        <p>⁦https://mlgcl.edu.ph⁩</p>
-                    </div>
-                    <div class="num2">
-                        <p>mlg@mlgcl.edu.ph</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Back of the ID -->
-        <div class="likod">
-            <div class="likod-one">
-                <div class="one-table">
-                    <table class="table-container">
-                        <tr>
-                            <th class="semester-title">Semester</th>
-                            <th>2022-2023</th>
-                            <th><span>School Year</span><br>2023-2024</th>
-                            <th>2024-2025</th>
-                            <th>2025-2026</th>
-                        </tr>
-                        <tr>
-                            <td>First</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Second</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="one-right">
-                    <div class="parag">
-                        <p>This is to certify that the person <br> whose picture and signature appear herein is a bonafide student of <br> <span class="parag1span">MLG College of Learning, Inc.</span> </p>
-                    </div>
-                    <div class="parag-name">
-                        <p>MARY LILIBETH O. YAN, DEV.ED.D <span> <br> School Director </span></p>
-                    </div>
-                    <div class="parag2">
-                        <p><span class="span">IMPORTANT REMINDERS</span> Always wear this ID while inside the school campus. <span class="span1">Do not forget your STUDENT ID NUMBER.</span>
-                        </p>
-                    </div>
-                    <div class="parag3">    
-                        <p>If lost and found, please surrender this ID to the STUDENT AFFAIRS OFFICE. MLG College of Learning, Inc. Brgy. Atabay, Hilongos, Leyte</p>
-                    </div>
-                    <div class="parag4" id="editable-text-parag4">
-                        <p>
-                            In case of emergency,<br>please contact <br>
-                            <span class="editable" id="editable-contact">
-                                <span id="editable-name" contenteditable="true" class="text-uppercase">{{ $employee->ename }}</span> <br />
-                                <span id="editable-number" contenteditable="true">{{ $employee->econtact }}</span>
-                            </span>
-                        </p>
-                    </div>
-                    <div class="parag5">
-                        <p>PLEASE SCAN THE QR <br>CODE AT THE FRONT FOR <br>MORE VALIDATION & <br>CONTACT INFORMATION.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="likod-two">
-                <div class="likod-two-last">
-                    <p>⁦https://www.facebook.com/mlgcl/⁩</p>
-                </div>
-            </div>
-        </div>
+<div class="pinakamain">
+			<div class="main-container">
+				<div class="main-one">
+					<div class="one">
+						<div class="logo">
+							<img src="{{asset('img/mlg.png')}}" alt="MLG Logo" />
+							<p >
+								MLG COLLEGE <br>
+								OF LEARNING, INC<br>
+                                Brgy. Atabay, Hilongos, Leyte
+							</p>
+						
+						</div>
+						<div class="qr-code">
+                        <img id="qr-code" src="" alt="Student QR Code">
+						</div>
+						<div class="signature">
+							<img src="{{ asset('storage/' . $employee->signature) }}" alt="Signature" id="draggableImageSignature" />
+						</div>
+						<div class="main-image">
+							<div class="image">
+								<img src="{{ asset('storage/' . $employee->proimage) }}" alt="Student Image" id="draggableImage" />
+							</div>
+						</div>
+					</div>
+				</div>
 
-    </div>
+                <style>
+                    .circle{
+                       margin-top: 100px;
+                    }
+                    .name h5{
+                        margin-top:-20px;
+                    }
+                    .numcourse{
+                        margin-top:-10px;
+                    }
+                    .number h4{
+                        font-size:16px;
+                    }
+                    .course h4{
+                        font-size:15px;
+                    }
+                    .last{
+                        margin-bottom:-18px;
+                    }
+                </style>
+				<div class="circle"></div>
+				<div class="mainconsaubos"  style="background-color: 
+                        {{ $employee->color ?? 'transparent' }}">
+                    
+					<div class="main-two">
+						<div class="main-name">
+							<div class="name editable" contenteditable="true" id="editable-text-name">
+								<h5 id="last-name" class="text-uppercase"> {{ $employee->lastname }}<br id="first-name">{{ $employee->firstname }}  {{ strtoupper(substr($employee->middlename, 0, 1)) }}.</h5>
+							</div>
+							<div class="brgy editable" contenteditable="true" id="editable-text-brgy">
+								<p> {{ $employee->address }}</p>
+							</div>
+						</div>
+						<div class="date editable" contenteditable="true" id="editable-text-date">
+							<p>Date of birth:<br /> {{ $employee->datebirth }}</p>
+						</div>
+					</div>
+					<div class="numcourse">
+						<div class="number editable" contenteditable="true" id="editable-text-number">
+							<h4> {{ $employee->employeeid }}</h4>
+						</div>
+						<div class="course editable" contenteditable="true" id="editable-text-course">
+							<h4> {{ $employee->position }}</h4>
+						</div>
+					</div>
+					<div class="last">
+						<div class="num1">
+							<p>https://mlgcl.edu.ph</p>
+						</div>
+						<div class="num2">
+							<p>mlg@mlgcl.edu.ph</p>
+						</div>
+					</div>
+				</div>
+			</div>
+            <style>
+                .parag-name p{
+                    margin-top:-30px;
+                    font-size:8px;
+                }
+
+                .tableNo table{
+                    margin-top:-10px;
+        
+                }
+                .parag2{
+                    margin-top:-8px;
+                }
+                .parag3{
+                    margin-top:-25px;
+                }
+                .parag4 p{
+                    margin-top:-23px;
+                }
+                .parag5{
+                    margin-top:-26px;
+                    height:55px;
+                }
+                .parag5 p{
+                  margin:5px;
+                }
+                .likod-two{
+                    height:20px;
+                }
+                .likod-two-last p{
+                    margin:10px;
+                }
+            </style>
+			<!-- Back of the ID -->
+			<div class="likod">
+				<div class="likod-one">
+					<div class="one-right">
+						<div class="parag">
+							<p>
+								This is to certify that the person whose
+								<br />
+								picture and signature appear herein is a <br />
+								bonafide student of <br />
+								<span class="parag1span">MLG College of Learning, Inc.</span>
+							</p>
+						</div>
+						<div class="parag-name">
+							<p>
+								MARY LILIBETH O. YAN, DEV.ED.D
+								<span>
+									<br />
+									School Director
+								</span>
+							</p>
+						</div>
+						<div class="tableNo">
+							<table>
+								<tr>
+									<td>TIN #</td>
+									<td class="num">292-429-675</td>
+									<td>PhilHealth #</td>
+									<td class="num">01-051293562-7</td>
+								</tr>
+								<tr>
+									<td>SSS #</td>
+									<td class="num">34-1976221-1</td>
+									<td>HDMF #</td>
+									<td class="num">1210-2944-8122</td>
+								</tr>
+							</table>
+						</div>
+						<div class="parag2">
+							<p>
+								<span class="span">IMPORTANT REMINDERS </span> <br />
+								Always wear this ID while inside the school campus. <br />
+								<span class="span1">DO NOT FORGET YOUR STUDENT ID NUMBER.</span>
+							</p>
+						</div>
+						<div class="parag3">
+							<p>
+								If lost and found, please surrender this ID to the <br />
+								SCHOOL DIRECTOR'S OFFICE. MLG College of Learning, <br />
+								Inc. Brgy. Atabay, Hilongos, Leyte
+							</p>
+						</div>
+						<div class="parag4" id="editable-text-parag4">
+							<p>
+								In case of emergency, please contact <br />
+								<span class="editable" id="editable-contact">
+									<span id="editable-name" contenteditable="true"> {{ $employee->ename }}</span> <br />
+									<span id="editable-number" contenteditable="true"> {{ $employee->contact }}</span>
+								</span>
+							</p>
+						</div>
+						<div class="parag5">
+							<p>PLEASE SCAN THE QR CODE AT THE FRONT <br />FOR MORE VALIDATION & CONTACT <br />INFORMATION.</p>
+						</div>
+					</div>
+				</div>
+				<div class="likod-two">
+					<div class="likod-two-last">
+						<svg width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none">
+							<path
+								fill="#1877F2"
+								d="M15 8a7 7 0 00-7-7 7 7 0 00-1.094 13.915v-4.892H5.13V8h1.777V6.458c0-1.754 
+                            1.045-2.724 2.644-2.724.766 0 1.567.137 1.567.137v1.723h-.883c-.87 0-1.14.54-1.14 1.093V8h1.941l-.31 2.023H9.094v4.892A7.001 7.001 0 0015 8z"
+							/>
+							<path
+								fill="#ffffff"
+								d="M10.725 10.023L11.035 8H9.094V6.687c0-.553.27-1.093 1.14-1.093h.883V3.87s-.801-.137-1.567-.137c-1.6 0-2.644.97-2.644 
+                            2.724V8H5.13v2.023h1.777v4.892a7.037 7.037 0 002.188 0v-4.892h1.63z"
+							/>
+						</svg>
+						<p>https://www.facebook.com/mlgcl/</p>
+					</div>
+				</div>
+			</div>
+		</div>
         </div>
     </div>
 </div>

@@ -19,5 +19,6 @@ class Student extends Model
         'ename',
         'signature',
         'proimage',
+        'qr',
     ];
 }

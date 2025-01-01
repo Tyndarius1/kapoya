@@ -46,11 +46,13 @@ class StudentController extends Controller
             'ename' => 'required|string|max:50',
             'signature' => 'nullable|image|mimes:jpeg,png,jpg,gif,jfif,svg|max:2048',
             'proimage' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'qr' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         // Store files if provided
         $signaturePath = $request->file('signature') ? $request->file('signature')->store('signature', 'public') : null;
         $proImagePath = $request->file('proimage') ? $request->file('proimage')->store('proimage', 'public') : null;
+        // $qrPath = $request->file('qr') ? $request->file('qr')->store('qr', 'public') : null;
 
         // Create the student record
         Student::create([
@@ -66,8 +68,9 @@ class StudentController extends Controller
             'ename' => $validated['ename'],
             'signature' => $signaturePath,
             'proimage' => $proImagePath,
+            // 'qr' => $qrPath,
         ]);
-
+// dd($qrPath);
         // Redirect with success message
         return redirect()->route('students.index')->with('success', 'Student created successfully!');
     } catch (\Exception $e) {
@@ -133,7 +136,7 @@ class StudentController extends Controller
         $student->ename = $request->ename;
         $student->datebirth = $request->datebirth;
       
-
+      
       
         if ($request->hasFile('signature')) {
             if ($student->signature && Storage::exists($student->signature)) {

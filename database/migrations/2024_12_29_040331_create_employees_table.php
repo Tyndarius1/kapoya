@@ -26,6 +26,7 @@ return new class extends Migration
         $table->string('qr')->nullable();
         $table->string('signature')->nullable();
         $table->string('proimage')->nullable();
+        $table->string('color')->nullable();
         // 
      
         $table->timestamps();

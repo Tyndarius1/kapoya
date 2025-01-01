@@ -25,6 +25,7 @@ return new class extends Migration
         $table->string('ename');
         $table->string('signature')->nullable();
         $table->string('proimage')->nullable();
+        $table->string('qr')->nullable();
         $table->timestamps();
         });
     }

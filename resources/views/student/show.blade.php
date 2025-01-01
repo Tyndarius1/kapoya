@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="{{ asset('css/functionality.css') }}">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
-<meta name="csrf-token" content="{{ csrf_token() }}">
+
 
 
 <style>
@@ -259,7 +259,38 @@
         <input type="color" id="text-color-picker" value="#000000">
     </button>
 </div>
-  
+@if ($message = Session::get('success'))
+    <script>
+       
+        Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "{{ $message }}",
+        showConfirmButton: false,
+        timer: 1500
+        });
+    </script>
+@endif
+
+@if ($errors->any())
+    <script>
+        Swal.fire({
+            position: "top-end",
+            icon: 'error',
+            title: '{{ $message }}',
+            html: `
+                <style="text-align: left;">
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}
+                    @endforeach
+            
+            `,
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
+@endif
+
 
 <!-- Student ID -->
     <div class="pinakamain">
@@ -272,7 +303,7 @@
                         <p class="barag">Brgy. Atabay, Hilongos, Leyte</p>
                     </div>
                     <div class="qr-code">
-                        <img src="qr.png" alt="Student QR Code">
+                        <img id="qr-code" src="" alt="Student QR Code">
                     </div>
                     <div class="signature" >
                     @if ($student->signature)
@@ -320,7 +351,7 @@
 
     <div class="numcourse">
         <div class="number">
-            <h4> {{ $student->studentid }}</h4>
+            <h4 id="student-id"> {{ $student->studentid }}</h4>
         </div>
         <div class="course">
             <h4> {{ $student->course }}</h4>
@@ -469,7 +500,7 @@
                                     <label for="qr">QR Code:</label>
                                     <input type="file" id="qr" name="qr">
                                     @if ($student->qr)
-                        <img src="{{ asset('storage/' . $student->qr) }}" alt="QR Code" width="30%">
+                        <img id="qr-code" src="" alt="QR Code" width="30%">
                     @else
                         <p>No QR code available.</p>
                     @endif
@@ -489,6 +520,48 @@
         </div>
     </div>
 </div>
+
+<script>
+    const apiKey = '{{ (config('system.api_key')) }}'; // Verify this renders correctly
+    const studentId = document.getElementById('student-id').textContent.trim(); // Ensure no extra spaces
+    console.log('Student ID:', studentId);
+
+    fetch(`https://api-portal.mlgcl.edu.ph/api/external/student-list`, {
+        method: 'GET',
+        headers: {
+            'Origin': 'http://idmaker.test', // Ensure this is a valid header value
+            'x-api-key': apiKey,
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Fetched data:', data);
+
+            const student = data.data.find(student =>
+                student.student_identification_number.some(id => id.student_id === studentId)
+            );
+
+            if (student) {
+                console.log('Student data:', student);
+                const qrCodeImg = document.getElementById('qr-code');
+                qrCodeImg.src = student.qr_code || ''; // Ensure the QR code URL exists
+                qrCodeImg.alt = "QR Code for " + student.student_identification_number;
+            } else {
+                console.error('Student with the specified ID not found.');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching students:', error);
+        });
+</script>
+
+
 
 <!-- modal script -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

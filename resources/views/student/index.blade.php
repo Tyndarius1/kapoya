@@ -3,6 +3,8 @@
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/id.css') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <style>
     .container {
         padding: 1.5rem;
@@ -210,23 +212,40 @@
         <input type="text" class="search-bar" placeholder="Search...">
     </div>
 </div>
-
 @if ($message = Session::get('success'))
-    <div class="alert alert-success">
-        <p>{{ $message }}</p>
-    </div>
+    <script>
+       
+        Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "{{ $message }}",
+        showConfirmButton: false,
+        timer: 1500
+        });
+    </script>
 @endif
 
 @if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+    <script>
+        Swal.fire({
+            position: "top-end",
+            icon: 'error',
+            title: '{{ $message }}',
+            html: `
+                <style="text-align: left;">
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}
+                    @endforeach
+            
+            `,
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
 @endif
+
+
+
 
 <div class="cards-container">
     @forelse($students as $student)
@@ -287,8 +306,8 @@
                 <span class="text-danger">{{ $errors->first('signature') }}</span>
             @endif
 
-            <!-- <label for="qr">Qr Code:</label>
-            <input type="file" id="qr" name="qr">
+            <!-- <label for="qr-code">Qr Code:</label>
+            <img id="qr-code" alt="QR Code" name="qr">
             @if ($errors->has('qr'))
                 <span class="text-danger">{{ $errors->first('qr') }}</span>
             @endif -->
@@ -303,6 +322,9 @@
         </form>
     </div>
 </div>
+
+
+
 
 <script>
     const modal = document.getElementById('createModal');
@@ -322,6 +344,7 @@
     const econtactInput = document.getElementById('econtact');
     const birthdateInput = document.getElementById('birthdate');
     const enameInput = document.getElementById('ename');
+    // const qrcode = document.getElementById('qr-code');
 
     createBtn.addEventListener('click', () => {
         modal.style.display = 'block';
@@ -362,7 +385,9 @@
             return response.json();
         })
         .then(data => {
+           
             const student = data.data.find(s => s.student_identification_number[0]?.student_id === studentId);
+    
             if (student) {
              
                 firstnameInput.value = student.first_name || '';
@@ -375,6 +400,7 @@
                 econtactInput.value = student.emergency_contact?.number || '';
                 birthdateInput.value = student.birthdate || '';
                 enameInput.value = student.emergency_contact?.name || '';
+                // qrcode. = student.qr_code || '';
                 searchError.style.display = 'none';
 
 
@@ -390,5 +416,6 @@
         });
     });
 </script>
+
 
 @endsection

@@ -44,6 +44,7 @@ class EmployeeController extends Controller
             'qr' => 'nullable|image|mimes:jpeg,png,jpg,gif,jfif,svg|max:2048',
             'signature' => 'nullable|image|mimes:jpeg,png,jpg,gif,jfif,svg|max:2048',
             'proimage' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'color' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
         ]);
       
 
@@ -66,6 +67,7 @@ class EmployeeController extends Controller
             'qr' => $qrPath,
             'signature' => $signaturePath,
             'proimage' => $proImagePath,
+            'color' => $validated['color'],
         ]);
         return redirect()->route('employee.index')->with('success', 'Employee created successfully!');
     } catch (\Exception $e) {
@@ -111,6 +113,7 @@ class EmployeeController extends Controller
             'qr' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:1024',
             'signature' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:1024',
             'proimage' => 'nullable|image|max:2048',
+          
         ]);
 
         $employee = Employee::findOrFail($id);
@@ -125,6 +128,8 @@ class EmployeeController extends Controller
         $employee->employeeid = $request->employeeid;
         $employee->datebirth = $request->datebirth;
         $employee->ename = $request->ename;
+     
+
        
 
       
