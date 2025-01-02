@@ -179,7 +179,7 @@ background-color: #4CAF50; /* Focus color */
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
     <script src="{{ asset('js/login-main.js') }}"></script>
-    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
 </body>
 </html>
