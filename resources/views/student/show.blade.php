@@ -324,11 +324,11 @@
                     </div>
                 </div>
                     <div class="qr-code">
-                        <img id="qr-code" src="" alt="Student QR Code">
+                        <img id="qr-code" src="{{ asset('storage/' . $student->qrcode) }}" alt="Student QR Code">
                     </div>
                     <div class="signature" >
                     @if ($student->signature)
-                    <img src="{{ asset('storage/' . $student->signature) }}" alt="QR Code" width="30%" id="draggableImageSignature">
+                    <img src="{{ asset('storage/' . $student->signature) }}" alt="Student Signature" width="30%" id="draggableImageSignature">
                     @else
                         <p>No signature available.</p>
                     @endif
@@ -336,7 +336,7 @@
                     <div class="main-image">
                         <div class="image">
                         @if ($student->proimage)
-                            <img src="{{ asset('storage/' . $student->proimage) }}" alt="QR Code" width="30%" id="draggableImage">
+                            <img src="{{ asset('storage/' . $student->proimage) }}" alt="Student Picture" width="30%" id="draggableImage">
                         @else
                             <p>No qr code available.</p>
                         @endif
